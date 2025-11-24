@@ -4,36 +4,70 @@ import { supabase } from "./db/supabase.js";
 
 const csvPath = "../data/1000-most-common-spanish-words.csv";
 
-let counter = 0;
+async function insertData() {
+  const bufferedRows = [];
 
-fs.createReadStream(csvPath)
-  .pipe(parse({ delimiter: ",", from_line: 2 }))
-  .on("data", function (csvRow) {
-    if (counter == 0) {
-      insertData(csvRow);
-      counter += 1;
-    }
-  })
-  .on("error", (error) => {
-    throw new Error(error.message);
+  await new Promise((resolve, reject) => {
+    fs.createReadStream(csvPath)
+      .pipe(parse({ delimiter: ",", from_line: 2 }))
+      .on("data", function (csvRow) {
+        const [rank, article, spanish, original_english, original_pos] = csvRow;
+        bufferedRows.push({
+          rank: parseInt(rank),
+          article: article.trim() == "" ? null : article.trim(),
+          spanish: spanish.trim(),
+          original_english: original_english.trim(),
+          original_pos: original_pos.trim(),
+        });
+      })
+      .on("end", async function () {
+        await insertAllRows(bufferedRows);
+        resolve();
+      })
+      .on("error", (error) => {
+        reject(error);
+      });
   });
+}
 
-async function insertData(row) {
-  const [rankStr, rawArticle, spanish, original_english, original_pos] = row;
-  const rank = parseInt(rankStr);
-  const article = rawArticle.trim() == "" ? null : rawArticle.trim();
-  const { error } = await supabase.from("words").insert([
-    {
-      rank: rank,
-      article: article,
-      spanish: spanish.trim(),
-      original_english: original_english.trim(),
-      original_pos: original_pos.trim(),
-    },
-  ]);
-  console.log(rank, article, spanish, original_english, original_pos);
+async function insertAllRows(array) {
+  const { error } = await supabase
+    .from("words")
+    .upsert(array, { onConflict: "spanish" });
+
+  console.log("Insert " + array.length + " rows.");
 
   if (error) {
     throw new Error(error.message);
   }
 }
+
+async function insertOneRow(row) {
+  const [rank, article, spanish, original_english, original_pos] = row;
+  const { error } = await supabase.from("words").upsert(
+    [
+      {
+        rank: parseInt(rank),
+        article: article.trim() == "" ? null : article.trim(),
+        spanish: spanish.trim(),
+        original_english: original_english.trim(),
+        original_pos: original_pos.trim(),
+      },
+    ],
+    { onConflict: "spanish" }
+  );
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+insertData()
+  .then(() => {
+    console.log("Done");
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error("Insert failed: ", err.message);
+    process.exit(1);
+  });
