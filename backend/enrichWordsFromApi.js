@@ -1,0 +1,84 @@
+import { supabase } from "./db/supabase.js";
+import { injectWordsTable } from "./injectWordsTable.js";
+
+const API_KEY = process.env.SPANISH_API_KEY;
+const BASE_URL = "https://dictionaryapi.com/api/v3/references/spanish/json";
+
+async function enrichWordsFromApi() {
+  // 1) Get only words that still need API data
+  const { data: words, error } = await supabase
+    .from("words")
+    .select("id, spanish")
+    .is("english", null);
+  // .eq("spanish", "ser");
+
+  if (error) {
+    console.error("Error fetching words:", error);
+    process.exit(1);
+  }
+
+  console.log(`Found ${words.length} words needing enrichment`);
+
+  for (const row of words) {
+    const term = row.spanish;
+    const encoded = encodeURIComponent(term);
+    const url = `${BASE_URL}/${encoded}?key=${API_KEY}`;
+
+    try {
+      console.log(`Fetching: ${term}`);
+
+      const res = await fetch(url);
+      if (!res.ok) {
+        console.error(`HTTP error for ${term}:`, res.status, res.statusText);
+        continue;
+      }
+
+      const json = await res.json();
+
+      if (!Array.isArray(json) || json.length === 0) {
+        console.warn(`No entries for ${term}, marking as empty definitions`);
+        await supabase.from("words").update({ english: [] }).eq("id", row.id);
+        continue;
+      }
+
+      // Prefer exact match on headword; fallback to first entry
+      const lower = term.toLowerCase();
+      const entry =
+        json.find(
+          (e) =>
+            e.hwi?.hw?.toLowerCase() === lower ||
+            e.meta?.id?.toLowerCase() === lower
+        ) || json[0];
+
+      const payload = injectWordsTable(entry);
+
+      const { error: updateError } = await supabase
+        .from("words")
+        .update(payload)
+        .eq("id", row.id);
+
+      if (updateError) {
+        console.error(`Update error for ${term}:`, updateError);
+      } else {
+        console.log(`Updated: ${term}`);
+      }
+    } catch (err) {
+      console.error(`Error processing ${term}:`, err);
+    }
+
+    // Optional: small delay to be gentle with the API
+    // await new Promise((res) => setTimeout(res, 100));
+  }
+
+  console.log("Enrichment complete");
+}
+
+enrichWordsFromApi()
+  .then(() => {
+    console.log("Done");
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error("Fatal error:", err);
+    process.exit(1);
+  });
