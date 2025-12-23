@@ -10,7 +10,6 @@ async function enrichWordsFromApi() {
     .from("words")
     .select("id, spanish")
     .is("english", null);
-  // .eq("spanish", "ser");
 
   if (error) {
     console.error("Error fetching words:", error);
@@ -25,6 +24,11 @@ async function enrichWordsFromApi() {
     const url = `${BASE_URL}/${encoded}?key=${API_KEY}`;
 
     try {
+      if (term.trim().length <= 2) {
+        console.log(`Skipped, ${term} is too short`)
+        continue
+      }
+
       console.log(`Fetching: ${term}`);
 
       const res = await fetch(url);
