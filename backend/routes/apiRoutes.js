@@ -1,6 +1,6 @@
-import express from 'express'
-import cors from 'cors'
+import express from "express";
+import { getDailyWords } from "../controllers/getDailyWords.js";
 
-export const apiRouter = express.Router()
+export const apiRouter = express.Router();
 
-app.use(cors())
+apiRouter.get("/words/daily", getDailyWords);
