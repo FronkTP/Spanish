@@ -42,26 +42,6 @@ async function insertAllRows(array) {
   }
 }
 
-async function insertOneRow(row) {
-  const [rank, article, spanish, original_english, original_pos] = row;
-  const { error } = await supabase.from("words").upsert(
-    [
-      {
-        rank: parseInt(rank),
-        article: article.trim() == "" ? null : article.trim(),
-        spanish: spanish.trim(),
-        original_english: original_english.trim(),
-        original_pos: original_pos.trim(),
-      },
-    ],
-    { onConflict: "spanish" }
-  );
-
-  if (error) {
-    throw new Error(error.message);
-  }
-}
-
 insertData()
   .then(() => {
     console.log("Done");
