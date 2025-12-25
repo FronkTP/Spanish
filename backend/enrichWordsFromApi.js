@@ -5,7 +5,7 @@ const API_KEY = process.env.SPANISH_API_KEY;
 const BASE_URL = "https://dictionaryapi.com/api/v3/references/spanish/json";
 
 async function enrichWordsFromApi() {
-  // 1) Get only words that still need API data
+  // Get only words that still need API data
   const { data: words, error } = await supabase
     .from("words")
     .select("id, spanish")
@@ -69,9 +69,6 @@ async function enrichWordsFromApi() {
     } catch (err) {
       console.error(`Error processing ${term}:`, err);
     }
-
-    // Optional: small delay to be gentle with the API
-    // await new Promise((res) => setTimeout(res, 100));
   }
 
   console.log("Enrichment complete");
