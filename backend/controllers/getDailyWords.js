@@ -16,14 +16,11 @@ function shuffleArray(arr) {
 }
 
 export async function getDailyWords(req, res) {
-  const userId = req.headers["x-user-id"];
-  if (!userId) return res.status(401).json({ error: "User not authenticated" });
-
   try {
     const { data: userWords, error: userWordsErr } = await supabase
       .from("user_words")
       .select("word_id, status")
-      .eq("user_id", userId);
+      .eq("user_id", process.env.TEST_USER);
 
     if (userWordsErr) throw userWordsErr;
 
