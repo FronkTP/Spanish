@@ -3,24 +3,39 @@ import { supabase } from "../db/supabase.js";
 export async function updateWordStatus(req, res) {
   try {
     const wordId = Number(req.params.word_id);
-    // check if word_id is nan and not positive, send res.status error
+    if (isNaN(wordId) || wordId <= 0) {
+      res.status(400).json({ error: "Invalid word id" });
+      return;
+    }
 
     const status = req.body.status;
-    // check if status in known, learning, new, else send res.status error
+    if (!["known", "learning", "new"].includes(status)) {
+      res.status(400).json({ error: "Invalid status value" });
+      return;
+    }
 
-    // call supabase to get date from word id
-    // if get 0 rows, res status error
+    const { data: wordDetail, error: wordDetailErr } = await supabase
+      .from("words")
+      .select("id")
+      .eq("id", wordId);
+    if (wordDetailErr) throw wordDetailErr;
+    if (wordDetail.length == 0) {
+      res.status(404).json({ error: "Word not found" });
+      return;
+    }
 
-    // if worddetailerr, send error
+    const { data: wordStatus, error: wordStatusErr } = await supabase
+      .from("user_words")
+      .upsert({
+        user_id: process.env.TEST_USER,
+        word_id: wordId,
+        status,
+        last_seen_at: new Date().toISOString(),
+      })
+      .execute();
+    if (wordStatusErr) throw wordStatusErr;
 
-    // call supabase to check how many rows returned from the current user id and word id
-    // if wordstatuserr, send error
-    // if 0 row, insert -> create a row in users_word, with current user_id, word_id, status, last seen
-    // if 1 row, update -> edit the status of the correct user id and word id, and edit the last seen
-    // can i use upsert?
-
-    // send back success response
-    // res.json(something);
+    res.json({ message: "Word status updated" });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch", details: err.message });
   }
