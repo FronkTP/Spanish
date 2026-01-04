@@ -48,6 +48,7 @@ export async function getDailyWords(req, res) {
       const { data: selectedWords, error: selectedErr } = await supabase
         .from("words")
         .select("*")
+        .neq("english", "[]")
         .in("id", selectedIds);
 
       if (selectedErr) throw selectedErr;
@@ -62,7 +63,11 @@ export async function getDailyWords(req, res) {
       const remaining = 5 - dailyWords.length;
       const excluded = selectedIds;
 
-      let fillerQuery = supabase.from("words").select("*").limit(100);
+      let fillerQuery = supabase
+        .from("words")
+        .select("*")
+        .limit(100)
+        .neq("english", "[]");
       if (excluded.length) {
         fillerQuery = fillerQuery.not("id", "in", `(${excluded.join(",")})`);
       }
