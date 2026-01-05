@@ -1,12 +1,5 @@
 import { supabase } from "../db/supabase.js";
 
-function pickRandom(arr, count) {
-  return arr
-    .slice()
-    .sort(() => Math.random() - 0.5)
-    .slice(0, count);
-}
-
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -17,75 +10,90 @@ function shuffleArray(arr) {
 
 export async function getDailyWords(req, res) {
   try {
-    const { data: userWords, error: userWordsErr } = await supabase
-      .from("user_words")
-      .select("word_id, status")
-      .eq("user_id", process.env.TEST_USER);
-
-    if (userWordsErr) throw userWordsErr;
-
-    const knownIds = userWords
-      .filter((u) => u.status === "known")
-      .map((u) => u.word_id);
-    const notKnownIds = userWords
-      .filter((u) => u.status !== "known")
-      .map((u) => u.word_id);
-
-    const selectedKnown = pickRandom(knownIds, 1);
-    const selectedUnknown = pickRandom(
-      notKnownIds.filter((id) => !selectedKnown.includes(id)),
-      4
-    );
-
-    let selectedIds = [...selectedKnown, ...selectedUnknown];
-    const statusById = new Map(
-      userWords.map((u) => [u.word_id, u.status || null])
-    );
-
+    const userId = process.env.TEST_USER;
+    const todayDate = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
     let dailyWords = [];
+    let selectedIds = [];
 
-    if (selectedIds.length) {
-      const { data: selectedWords, error: selectedErr } = await supabase
-        .from("words")
-        .select("*")
-        .neq("english", "{}")
-        .in("id", selectedIds);
+    const { data: userDailyWordIds, error: userDailyWordIdsErr } =
+      await supabase
+        .from("daily_words")
+        .select("word_ids")
+        .eq("user_id", userId)
+        .eq("date", todayDate);
+    const existingDailyIds = userDailyWordIds?.[0]?.word_ids ?? null;
 
-      if (selectedErr) throw selectedErr;
+    if (userDailyWordIdsErr) throw userDailyWordIdsErr;
 
-      dailyWords = selectedIds
-        .map((id) => selectedWords.find((w) => w.id === id))
-        .filter(Boolean)
-        .map((w) => ({ ...w, status: statusById.get(w.id) || null }));
+    const { data: allWords, error: allWordsErr } = await supabase
+      .from("words")
+      .select(
+        `
+        *,
+        user_words (
+          status
+        )
+      `
+      )
+      .eq("user_words.user_id", userId)
+      .neq("english", "{}");
+
+    if (allWordsErr) throw allWordsErr;
+
+    const normalizedWords = allWords.map((w) => ({
+      ...w,
+      status: w.user_words?.[0]?.status ?? "new",
+    }));
+
+    const allIds = normalizedWords.map((u) => u.id);
+    const knownIds = normalizedWords
+      .filter((u) => u.status === "known")
+      .map((u) => u.id);
+    const notKnownIds = normalizedWords
+      .filter((u) => u.status !== "known")
+      .map((u) => u.id);
+
+    // check if today word ids already exists
+    if (!existingDailyIds) {
+      const selectedKnown = shuffleArray(knownIds).slice(0, 1);
+      const selectedUnknown = shuffleArray(
+        notKnownIds.filter((id) => !selectedKnown.includes(id))
+      ).slice(0, 4);
+
+      selectedIds = [...selectedKnown, ...selectedUnknown];
+    } else {
+      selectedIds = existingDailyIds;
     }
 
-    if (dailyWords.length < 5) {
-      const remaining = 5 - dailyWords.length;
-      const excluded = selectedIds;
+    if (selectedIds.length < 5) {
+      const remaining = 5 - selectedIds.length;
 
-      let fillerQuery = supabase
-        .from("words")
-        .select("*")
-        .limit(100)
-        .neq("english", "{}");
-      if (excluded.length) {
-        fillerQuery = fillerQuery.not("id", "in", `(${excluded.join(",")})`);
-      }
+      const fillerIds = shuffleArray(
+        allIds.filter((id) => !selectedIds.includes(id))
+      ).slice(0, remaining);
 
-      const { data: fillerCandidates, error: fillerErr } = await fillerQuery;
-      if (fillerErr) throw fillerErr;
-
-      const filler = pickRandom(fillerCandidates || [], remaining).map((w) => ({
-        ...w,
-        status: statusById.get(w.id) || null,
-      }));
-
-      dailyWords = [...dailyWords, ...filler];
-      selectedIds = [...selectedIds, ...filler.map((w) => w.id)];
+      selectedIds = [...selectedIds, ...fillerIds];
     }
+
+    dailyWords = selectedIds
+      .map((id) => normalizedWords.find((w) => w.id === id))
+      .filter(Boolean);
 
     if (!dailyWords.length) {
       return res.status(404).json({ error: "No words available" });
+    }
+
+    if (!existingDailyIds) {
+      const { data: userDailyWords, error: userDailyWordsErr } = await supabase
+        .from("daily_words")
+        .insert({
+          user_id: userId,
+          word_ids: selectedIds,
+          date: todayDate,
+          created_at: new Date().toISOString(),
+        });
+
+      if (userDailyWordsErr) throw userDailyWordsErr;
     }
 
     dailyWords = shuffleArray(dailyWords);
