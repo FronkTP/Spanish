@@ -30,9 +30,8 @@ export async function updateWordStatus(req, res) {
         user_id: process.env.TEST_USER,
         word_id: wordId,
         status,
-        last_seen_at: new Date().toISOString(),
-      })
-      .execute();
+        last_seen: new Date().toISOString(),
+      });
     if (wordStatusErr) throw wordStatusErr;
 
     res.json({ message: "Word status updated" });
