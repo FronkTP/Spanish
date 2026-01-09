@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function WordCard({
   word = {},
@@ -17,6 +17,9 @@ export default function WordCard({
     original_english = "",
     status = "",
   } = word;
+
+  const [showDetails, setShowDetails] = useState(false);
+  useEffect(() => setShowDetails(false), [word]);
 
   const audioRef = useRef(null);
 
@@ -81,6 +84,19 @@ export default function WordCard({
             </button>
           </div>
         </div>
+      {!showDetails && (
+        <button
+          onClick={() => {
+            if (status === "new" && changeStatus) {
+              changeStatus(id, "learning");
+            }
+            setShowDetails(true);
+          }}
+          className="w-full mt-6 py-4 rounded-2xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-all text-muted-foreground hover:text-foreground"
+        >
+          Reveal translation
+        </button>
+      )}
 
         {/* <p>
           {original_english ||
