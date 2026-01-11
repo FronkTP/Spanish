@@ -11,7 +11,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main className="bg-background-light">
       <h1>Home page</h1>
       <WordList words={words} />
     </main>

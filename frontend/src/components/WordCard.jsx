@@ -47,7 +47,7 @@ export default function WordCard({
   const statusClasses = STATUS_CLASSES[status] ?? STATUS_CLASSES.new;
 
   return (
-    <div className="max-w-3xl mx-auto my-8 p-6 bg-background-light rounded-xl shadow-lg border border-gray-100">
+    <div className="max-w-3xl mx-auto my-8 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-sm text-gray-500 uppercase">5 Words of the Day</p>
