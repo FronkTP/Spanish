@@ -1,10 +1,24 @@
+import { useState, useEffect } from "react";
+
 export default function Progress() {
+  const [progressObj, setProgressObj] = useState({});
+
+  useEffect(() => {
+    fetch("/api/progress")
+      .then((response) => response.json())
+      .then((json) => {
+        setProgressObj(json);
+        console.log(json);
+      });
+  }, []);
+
   return (
     <main className="p-6 bg-background-light">
       <h1 className="mb-6 text-4xl font-extrabold text-center">
         My Learning Progress
       </h1>
       {/* Stats */}
+      <h1>{progressObj && JSON.stringify(progressObj)}</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 w-full px-6 md:p-6 rounded-xl border border-gray-100 bg-white shadow-sm divide-y divide-accent/50 md:divide-y-0 md:divide-x">
         <div className="flex items-center justify-center gap-3 py-6">
           <div className="text-primary">
@@ -29,7 +43,9 @@ export default function Progress() {
             </svg>
           </div>
           <div>
-            <p className="text-4xl text-primary font-extrabold">15</p>
+            <p className="text-4xl text-primary font-extrabold">
+              {progressObj.streak ?? 0}
+            </p>
             <p className="text-sm uppercase tracking-tight text-primary">
               daily grind
             </p>
@@ -58,7 +74,9 @@ export default function Progress() {
             </svg>
           </div>
           <div>
-            <p className="text-4xl text-accent font-extrabold">15%</p>
+            <p className="text-4xl text-accent font-extrabold">
+              {progressObj.wordKnown ?? 0}%
+            </p>
             <p className="text-sm uppercase tracking-tight text-accent">
               vocabulary mastered
             </p>
@@ -87,7 +105,9 @@ export default function Progress() {
             </svg>
           </div>
           <div>
-            <p className="text-4xl text-primary font-extrabold">1533</p>
+            <p className="text-4xl text-primary font-extrabold">
+              {progressObj.xp ?? 0}
+            </p>
             <p className="text-sm uppercase tracking-tight text-primary">
               xp gained
             </p>
@@ -159,16 +179,18 @@ export default function Progress() {
         <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Achievements</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-14 h-14 rounded-full bg-accent/20 ring-2 ring-accent flex items-center justify-center shadow-sm">
-                📚
+            {progressObj?.achievement?.map((a) => (
+              <div key={a.title} className="flex flex-col items-center gap-2">
+                <div className="w-14 h-14 rounded-full bg-accent/20 ring-2 ring-accent flex items-center justify-center shadow-sm">
+                  {a.icon}
+                </div>
+                <div className="text-xs text-center font-semibold">
+                  {a.title}
+                </div>
               </div>
-              <div className="text-xs text-center font-semibold">
-                Vocab King
-              </div>
-            </div>
-            <div className="font-semibold text-gray-500">
-              Practise more to unlock...
+            ))}
+            <div className="text-sm font-semibold text-gray-500 col-span-2">
+              Keep practising to unlock more achievements...
             </div>
           </div>
         </div>
