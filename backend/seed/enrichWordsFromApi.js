@@ -1,4 +1,4 @@
-import { supabase } from "./db/supabase.js";
+import { supabase } from "../db/supabase.js";
 import { injectWordsTable } from "./injectWordsTable.js";
 
 const API_KEY = process.env.SPANISH_API_KEY;

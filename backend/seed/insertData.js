@@ -1,6 +1,6 @@
 import { parse } from "csv-parse";
 import fs from "fs";
-import { supabase } from "./db/supabase.js";
+import { supabase } from "../db/supabase.js";
 
 const csvPath = "../data/1000-most-common-spanish-words.csv";
 
