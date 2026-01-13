@@ -19,7 +19,7 @@ export default function WordCard({
   } = word;
 
   const [showDetails, setShowDetails] = useState(false);
-  useEffect(() => setShowDetails(false), [word]);
+  useEffect(() => setShowDetails(false), [id]);
 
   const audioRef = useRef(null);
 
