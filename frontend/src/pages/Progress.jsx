@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { BookOpenIcon, FireIcon, StarIcon } from "@heroicons/react/24/outline";
+import { iconMap } from "../constants/achievementIconMap";
+import { AchievementBadge } from "../components/AchievementBadge";
 
 export default function Progress() {
   const [progressObj, setProgressObj] = useState({});
@@ -14,33 +17,15 @@ export default function Progress() {
 
   return (
     <main className="p-6 bg-background-light">
-      <h1 className="mb-6 text-4xl font-extrabold text-center">
+      <h1 className="mb-6 text-5xl font-extrabold text-center">
         My Learning Progress
       </h1>
       {/* Stats */}
-      <h1>{progressObj && JSON.stringify(progressObj)}</h1>
+      {/* <h1>{progressObj && JSON.stringify(progressObj)}</h1> */}
       <div className="grid grid-cols-1 md:grid-cols-3 w-full px-6 md:p-6 rounded-xl border border-gray-100 bg-white shadow-sm divide-y divide-accent/50 md:divide-y-0 md:divide-x">
         <div className="flex items-center justify-center gap-3 py-6">
           <div className="text-primary">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-8"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"
-              />
-            </svg>
+            <FireIcon className="size-8" />
           </div>
           <div>
             <p className="text-4xl text-primary font-extrabold">
@@ -53,25 +38,7 @@ export default function Progress() {
         </div>
         <div className="flex items-center justify-center gap-3 py-6">
           <div className="text-accent">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-8"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"
-              />
-            </svg>
+            <BookOpenIcon className="size-8" />
           </div>
           <div>
             <p className="text-4xl text-accent font-extrabold">
@@ -84,25 +51,7 @@ export default function Progress() {
         </div>
         <div className="flex items-center justify-center gap-3 py-6">
           <div className="text-primary">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-8"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"
-              />
-            </svg>
+            <StarIcon className="size-8" />
           </div>
           <div>
             <p className="text-4xl text-primary font-extrabold">
@@ -179,16 +128,12 @@ export default function Progress() {
         <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Achievements</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {progressObj?.achievement?.map((a) => (
-              <div key={a.title} className="flex flex-col items-center gap-2">
-                <div className="w-14 h-14 rounded-full bg-accent/20 ring-2 ring-accent flex items-center justify-center shadow-sm">
-                  {a.icon}
-                </div>
-                <div className="text-xs text-center font-semibold">
-                  {a.title}
-                </div>
-              </div>
-            ))}
+            {progressObj?.achievement?.map((a) => {
+              const Icon = iconMap[a.iconTitle] ?? iconMap.MinusCircleIcon;
+              return (
+                <AchievementBadge key={a.title} title={a.title} Icon={Icon} />
+              );
+            })}
             <div className="text-sm font-semibold text-gray-500 col-span-2">
               Keep practising to unlock more achievements...
             </div>

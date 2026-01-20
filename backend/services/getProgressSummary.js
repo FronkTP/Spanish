@@ -17,11 +17,11 @@ export async function getProgressSummaryForUser(userId) {
     achievement: [
       {
         title: "Vocab King",
-        icon: "📚",
+        iconTitle: "RectangleStackIcon",
       },
       {
         title: "7-Day Streak",
-        icon: "📅",
+        iconTitle: "CalendarDateRangeIcon",
       },
     ],
   };
