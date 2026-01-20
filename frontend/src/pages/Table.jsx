@@ -1,7 +1,7 @@
 export default function Table() {
   return (
-    <main>
+    <div>
       <h1>Table page</h1>
-    </main>
+    </div>
   );
 }

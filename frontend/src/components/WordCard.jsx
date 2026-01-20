@@ -53,7 +53,7 @@ export default function WordCard({
   const statusClasses = STATUS_CLASSES[status] ?? STATUS_CLASSES.new;
 
   return (
-    <div className="max-w-3xl mx-auto my-8 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+    <div className="mx-auto my-6 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-sm text-gray-500 uppercase">5 Words of the Day</p>
@@ -165,8 +165,9 @@ export default function WordCard({
           {id}
           <button
             onClick={() => {
-              changeStatus && changeStatus(id, "learning")
-              nextWord()}}
+              changeStatus && changeStatus(id, "learning");
+              nextWord();
+            }}
             className="px-5 py-2 border border-primary bg-background-light text-primary rounded shadow-sm hover:bg-red-50"
           >
             Mark as Learning

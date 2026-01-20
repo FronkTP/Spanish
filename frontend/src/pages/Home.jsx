@@ -15,7 +15,7 @@ export default function Home() {
   const changeStatus = (wordId, newStatus) => {
     setWords((prevWords) => {
       return prevWords.map((w) =>
-        w.id === wordId ? { ...w, status: newStatus } : w
+        w.id === wordId ? { ...w, status: newStatus } : w,
       );
     });
 
@@ -45,8 +45,9 @@ export default function Home() {
   };
 
   return (
-    <main className="bg-background-light">
-      <h1>Home page</h1>
+    <div className="max-w-3xl mx-auto">
+      <h1 className="mb-2 text-4xl font-bold text-text-dark">!Bienvenido¡</h1>
+      <h2 className="mb-6 text-xl text-text-dark">Let’s learn Spanish one word at a time.</h2>
       {!words || words.length === 0 ? (
         <p>Loading...</p>
       ) : (
@@ -57,6 +58,6 @@ export default function Home() {
           changeStatus={changeStatus}
         />
       )}
-    </main>
+    </div>
   );
 }

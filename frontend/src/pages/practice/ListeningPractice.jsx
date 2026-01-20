@@ -22,7 +22,7 @@ export default function ListeningPractice() {
   };
 
   return (
-    <main>
+    <div>
       <h1>Listening Practice page</h1>
       {practice && JSON.stringify(practice)}
       <div>
@@ -39,6 +39,6 @@ export default function ListeningPractice() {
         src={practice?.wordMetadata?.audio}
         preload="none"
       />
-    </main>
+    </div>
   );
 }
