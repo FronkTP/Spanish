@@ -65,7 +65,15 @@ export default function WordCard({
             <button
               onClick={playAudio}
               aria-label="play pronunciation"
-              className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-red-50 text-primary hover:bg-red-100 translate-y-2"
+              disabled={audio === null}
+              className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-red-50 text-primary ${
+                audio === null
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-red-100 cursor-pointer"
+              } translate-y-2`}
+              title={`${
+                audio === null ? "Audio not available for this word" : ""
+              }`}
             >
               <SpeakerWaveIcon className="size-6" />
             </button>
@@ -102,7 +110,7 @@ export default function WordCard({
             }
             setShowDetails(true);
           }}
-          className="w-full mt-6 py-4 rounded-2xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 transition-all text-muted-foreground hover:text-foreground"
+          className="w-full mt-6 py-4 rounded-2xl border-2 border-dashed hover:border-primary/50 hover:bg-primary/5 transition-all text-muted-foreground hover:text-foreground"
         >
           Reveal translation
         </button>
@@ -146,27 +154,36 @@ export default function WordCard({
         )}
       </div>
 
-      <div className="mt-6 flex gap-4 items-center justify-end">
-        <button
-          onClick={() => changeStatus && changeStatus(id, "known")}
-          className="px-4 py-2 rounded border border-primary bg-background-light text-primary hover:bg-red-50"
-        >
-          I Know This
-        </button>
+      <div className="mt-6 flex gap-4 items-center justify-between">
         <button
           onClick={prevWord}
-          className="px-4 py-2 rounded border border-primary bg-background-light text-primary hover:bg-red-50"
+          className="px-4 py-2 rounded-full border border-gray-500 bg-background-light text-gray-500 hover:bg-gray-50"
         >
           <ChevronLeftIcon className="size-4" />
         </button>
+        <div className="flex gap-3">
+          {id}
+          <button
+            onClick={() => {
+              changeStatus && changeStatus(id, "learning")
+              nextWord()}}
+            className="px-5 py-2 border border-primary bg-background-light text-primary rounded shadow-sm hover:bg-red-50"
+          >
+            Mark as Learning
+          </button>
+          <button
+            onClick={() => {
+              changeStatus && changeStatus(id, "known");
+              nextWord();
+            }}
+            className="px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded shadow-sm hover:bg-gray-100"
+          >
+            I Know This
+          </button>
+        </div>
         <button
-          onClick={() => {
-            nextWord();
-            if (status === "new" && changeStatus) {
-              changeStatus(id, "learning");
-            }
-          }}
-          className="px-5 py-2 bg-primary text-background-light rounded shadow hover:bg-red-800"
+          onClick={nextWord}
+          className="px-4 py-2 rounded-full border border-gray-500 bg-background-light text-gray-500 hover:bg-gray-50"
         >
           <ChevronRightIcon className="size-4" />
         </button>
