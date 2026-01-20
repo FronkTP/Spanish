@@ -1,4 +1,10 @@
 import { useState, useEffect, useRef } from "react";
+import {
+  BookmarkIcon,
+  SpeakerWaveIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
 export default function WordCard({
   word = {},
@@ -61,20 +67,7 @@ export default function WordCard({
               aria-label="play pronunciation"
               className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-red-50 text-primary hover:bg-red-100 translate-y-2"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
-                />
-              </svg>
+              <SpeakerWaveIcon className="size-6" />
             </button>
           </div>
           <div className="mt-4 flex items-center gap-3">
@@ -97,20 +90,7 @@ export default function WordCard({
             className="p-2 text-gray-500 hover:text-gray-700"
             aria-label="bookmark"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-              />
-            </svg>
+            <BookmarkIcon className="size-6" />
           </button>
         </div>
       </div>
@@ -177,7 +157,7 @@ export default function WordCard({
           onClick={prevWord}
           className="px-4 py-2 rounded border border-primary bg-background-light text-primary hover:bg-red-50"
         >
-          Previous Word
+          <ChevronLeftIcon className="size-4" />
         </button>
         <button
           onClick={() => {
@@ -188,7 +168,7 @@ export default function WordCard({
           }}
           className="px-5 py-2 bg-primary text-background-light rounded shadow hover:bg-red-800"
         >
-          Next Word
+          <ChevronRightIcon className="size-4" />
         </button>
       </div>
 
