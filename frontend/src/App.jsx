@@ -6,7 +6,7 @@ import Progress from "./pages/Progress";
 import PracticeLayout from "./pages/practice/PracticeLayout";
 import Practice from "./pages/practice/Practice";
 import ListeningPractice from "./pages/practice/ListeningPractice";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
             <Route index element={<Practice />} />
             <Route path="listening" element={<ListeningPractice />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
