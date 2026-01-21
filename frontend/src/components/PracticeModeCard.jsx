@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 
-export function PracticeModeCard({ path, title, subtitle, color, Icon }) {
-  const hoverBorder = "hover:border-" + color;
-  const bg = "bg-" + color;
-
+export function PracticeModeCard({
+  path,
+  title,
+  subtitle,
+  bg,
+  hoverBorder,
+  Icon,
+}) {
   return (
     <Link to={path}>
       <div
