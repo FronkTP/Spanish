@@ -8,6 +8,7 @@ import Practice from "./pages/practice/Practice";
 import ListeningPractice from "./pages/practice/ListeningPractice";
 import FlashcardPractice from "./pages/practice/FlashcardPractice";
 import NotFound from "./pages/NotFound";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
