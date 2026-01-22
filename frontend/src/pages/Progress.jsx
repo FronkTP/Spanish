@@ -17,7 +17,7 @@ export default function Progress() {
 
   return (
     <div>
-      <h1 className="mb-6 text-5xl font-extrabold text-center text-text-dark">
+      <h1 className="mb-6 text-5xl font-extrabold text-center">
         My Learning Progress
       </h1>
       {/* Stats */}
