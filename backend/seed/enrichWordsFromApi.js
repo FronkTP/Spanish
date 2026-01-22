@@ -20,13 +20,16 @@ async function enrichWordsFromApi() {
 
   for (const row of words) {
     const term = row.spanish;
-    const encoded = encodeURIComponent(term);
-    const url = `${BASE_URL}/${encoded}?key=${API_KEY}`;
+    const normalized = term
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase();
+    const url = `${BASE_URL}/${normalized}?key=${API_KEY}`;
 
     try {
       if (term.trim().length <= 2) {
-        console.log(`Skipped, ${term} is too short`)
-        continue
+        console.log(`Skipped, ${term} is too short`);
+        continue;
       }
 
       console.log(`Fetching: ${term}`);
@@ -50,9 +53,17 @@ async function enrichWordsFromApi() {
       const entry =
         json.find(
           (e) =>
+            e.meta?.lang === "es" &&
+            (e.hwi?.hw?.toLowerCase() === lower ||
+              e.meta?.id?.toLowerCase() === lower),
+        ) ||
+        json.find((e) => e.meta?.lang === "es") ||
+        json.find(
+          (e) =>
             e.hwi?.hw?.toLowerCase() === lower ||
-            e.meta?.id?.toLowerCase() === lower
-        ) || json[0];
+            e.meta?.id?.toLowerCase() === lower,
+        ) ||
+        json[0];
 
       const payload = injectWordsTable(entry);
 
