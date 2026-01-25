@@ -18,7 +18,7 @@ export default function NotFound() {
       <div className="mt-8 flex flex-col sm:flex-row gap-4">
         <Link
           to="/"
-          className="px-8 py-3 rounded-2xl bg-accent font-semibold shadow-sm hover:bg-yellow-500 transition-colors text-center"
+          className="px-8 py-3 rounded-xl bg-accent font-semibold shadow-sm hover:bg-yellow-500 transition-colors text-center"
         >
           Go Back Home
         </Link>
@@ -30,8 +30,8 @@ export default function NotFound() {
 
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
         <Link to="/">
-          <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-500 flex items-center justify-center mb-4">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-amber-100 text-accent flex items-center justify-center mb-4">
               <GlobeEuropeAfricaIcon className="size-6" />
             </div>
             <h3 className="text-lg font-semibold mb-1">Daily Word</h3>
@@ -41,8 +41,8 @@ export default function NotFound() {
           </div>
         </Link>
         <Link to="/progress">
-          <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-500 flex items-center justify-center mb-4">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-amber-100 text-accent flex items-center justify-center mb-4">
               <ArrowTrendingUpIcon className="size-6" />
             </div>
             <h3 className="text-lg font-semibold mb-1">My Progress</h3>
@@ -52,8 +52,8 @@ export default function NotFound() {
           </div>
         </Link>
         <Link to="/practice/listening">
-          <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-500 flex items-center justify-center mb-4">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-amber-100 text-accent flex items-center justify-center mb-4">
               <SpeakerWaveIcon className="size-6" />
             </div>
             <h3 className="text-lg font-semibold mb-1">Listening Quiz</h3>

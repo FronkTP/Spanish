@@ -66,10 +66,10 @@ export default function WordCard({
               onClick={playAudio}
               aria-label="play pronunciation"
               disabled={audio === null}
-              className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-red-50 text-primary ${
+              className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/5 text-primary ${
                 audio === null
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-red-100 cursor-pointer"
+                  : "hover:bg-primary/15 cursor-pointer"
               } translate-y-2`}
               title={`${
                 audio === null ? "Audio not available for this word" : ""
@@ -110,7 +110,7 @@ export default function WordCard({
             }
             setShowDetails(true);
           }}
-          className="w-full mt-6 py-4 rounded-2xl border-2 border-dashed hover:border-primary/50 hover:bg-primary/5 transition-all text-muted-foreground hover:text-foreground"
+          className="w-full mt-6 py-4 rounded-xl border-2 border-dashed hover:border-primary/50 hover:bg-primary/5 transition-all text-muted-foreground hover:text-foreground"
         >
           Reveal translation
         </button>
@@ -168,7 +168,7 @@ export default function WordCard({
               changeStatus && changeStatus(id, "learning");
               nextWord();
             }}
-            className="px-5 py-2 border border-primary bg-background-light text-primary rounded shadow-sm hover:bg-red-50"
+            className="px-5 py-2 border border-primary bg-background-light text-primary rounded-xl shadow-sm hover:bg-primary/5"
           >
             Mark as Learning
           </button>
@@ -177,7 +177,7 @@ export default function WordCard({
               changeStatus && changeStatus(id, "known");
               nextWord();
             }}
-            className="px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded shadow-sm hover:bg-gray-100"
+            className="px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-sm hover:bg-gray-100"
           >
             I Know This
           </button>
