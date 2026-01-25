@@ -4,6 +4,7 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
+import PracticeSummary from "../../components/PracticeSummary";
 
 export default function ListeningPractice() {
   const [practice, setPractice] = useState({ choices: [], correctChoice: "" });
@@ -158,7 +159,7 @@ export default function ListeningPractice() {
           />
         </div>
       ) : (
-        "summary"
+        <PracticeSummary mode={"Listening"} score={score} total={total} />
       )}
     </>
   );
