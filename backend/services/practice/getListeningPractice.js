@@ -69,21 +69,23 @@ function shuffleArray(array) {
 }
 
 export async function getListeningPractice(userId) {
-  // get 1 word instead of all words, how to make it random; no random, do from oldest word
+  const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
+
   const { data: listeningWord, error: listeningWordErr } = await supabase
     .from("user_words")
     .select(
       `
         status, 
         last_seen,
-        words (
+        words!inner (
           *
         )
     `,
     )
-    .order("last_seen", { ascending: true })
     .eq("user_id", userId)
-    .neq("words.english", "{}")
+    .lt("last_seen", sixHoursAgo.toISOString())
+    .order("last_seen", { ascending: true })
+    .not("words.audio", "is", null)
     .limit(1);
 
   if (listeningWordErr) throw listeningWordErr;
@@ -91,7 +93,7 @@ export async function getListeningPractice(userId) {
   if (listeningWord.length === 0) {
     return {
       status: "empty",
-      message: "Learn some words first.",
+      message: "Learn some more words first.",
       practice: null,
     };
   }
