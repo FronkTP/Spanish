@@ -84,8 +84,8 @@ export default function ListeningPractice() {
           <p className="text-right">
             Score: {score} / {total}
           </p>
-          <div className="max-w-3xl mx-auto flex flex-col items-center gap-10">
-            <h1 className="text-4xl font-bold text-center">
+          <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
+            <h1 className="mb-4 text-4xl font-bold text-center">
               Listen and choose the correct word
             </h1>
             <div className="text-center">
