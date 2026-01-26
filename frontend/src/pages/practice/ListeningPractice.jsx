@@ -33,6 +33,22 @@ export default function ListeningPractice() {
 
   const audioRef = useRef(null);
 
+  useEffect(() => {
+    const src = practice?.wordMetadata?.audio;
+    if (!src || !audioRef.current) return;
+
+    const tryPlay = async () => {
+      try {
+        audioRef.current.load();
+        await audioRef.current.play();
+      } catch (err) {
+        // Ignore silently
+      }
+    };
+
+    tryPlay(); 
+  }, [practice?.wordMetadata?.audio]);
+
   const playAudio = () => {
     if (!audioRef.current) return;
     audioRef.current.currentTime = 0;
