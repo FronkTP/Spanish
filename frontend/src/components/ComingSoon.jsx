@@ -19,7 +19,7 @@ export default function ComingSoon() {
 
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full">
         <Link to="/">
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
             <div className="w-12 h-12 rounded-xl bg-amber-100 text-accent flex items-center justify-center mb-4">
               <GlobeEuropeAfricaIcon className="size-6" />
             </div>
@@ -30,7 +30,7 @@ export default function ComingSoon() {
           </div>
         </Link>
         <Link to="/progress">
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
             <div className="w-12 h-12 rounded-xl bg-amber-100 text-accent flex items-center justify-center mb-4">
               <ArrowTrendingUpIcon className="size-6" />
             </div>
@@ -41,7 +41,7 @@ export default function ComingSoon() {
           </div>
         </Link>
         <Link to="/practice/listening">
-          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
             <div className="w-12 h-12 rounded-xl bg-amber-100 text-accent flex items-center justify-center mb-4">
               <SpeakerWaveIcon className="size-6" />
             </div>

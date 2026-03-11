@@ -130,7 +130,7 @@ export default function ListeningPractice() {
                     key={choice}
                     onClick={() => handleChoiceSelect(choice)}
                     disabled={showIsCorrect}
-                    className="flex w-full items-center gap-4 rounded-xl border bg-white px-6 py-4 text-left text-lg font-semibold shadow-sm hover:bg-gray-50"
+                    className="flex w-full items-center gap-4 rounded-xl border bg-white px-6 py-4 text-left text-lg font-semibold shadow-xs hover:bg-gray-50"
                   >
                     <div className="flex size-10 items-center justify-center rounded-full bg-gray-100 text-lg font-semibold">
                       {index + 1}
@@ -152,7 +152,7 @@ export default function ListeningPractice() {
               {total > 0 && (
                 <button
                   onClick={() => finishSession()}
-                  className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-sm hover:bg-gray-100"
+                  className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
                 >
                   Finish this Session
                 </button>
@@ -160,7 +160,7 @@ export default function ListeningPractice() {
               {showIsCorrect && (
                 <button
                   onClick={() => nextQuestion()}
-                  className="w-full px-5 py-2 bg-primary text-background-light rounded-xl shadow-sm hover:bg-red-800"
+                  className="w-full px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800"
                 >
                   Next Question
                 </button>

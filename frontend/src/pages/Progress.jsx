@@ -22,7 +22,7 @@ export default function Progress() {
       </h1>
       {/* Stats */}
       {/* <h1>{progressObj && JSON.stringify(progressObj)}</h1> */}
-      <div className="grid grid-cols-1 md:grid-cols-3 w-full px-6 md:p-6 rounded-xl border border-gray-100 bg-white shadow-sm divide-y divide-accent/50 md:divide-y-0 md:divide-x">
+      <div className="grid grid-cols-1 md:grid-cols-3 w-full px-6 md:p-6 rounded-xl border border-gray-100 bg-white shadow-xs divide-y divide-accent/50 md:divide-y-0 md:divide-x">
         <div className="flex items-center justify-center gap-3 py-6">
           <div className="text-primary">
             <FireIcon className="size-8" />
@@ -65,7 +65,7 @@ export default function Progress() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         {/* Weekly Activity */}
-        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
           <h2 className="text-lg font-semibold mb-4">Weekly Activity</h2>
           <div className="grid grid-cols-4 sm:grid-cols-7 gap-3 mb-6">
             <div className="flex flex-col items-center text-xs">
@@ -125,7 +125,7 @@ export default function Progress() {
         </div>
 
         {/* Achievements */}
-        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-xs">
           <h2 className="text-lg font-semibold mb-4">Achievements</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
             {progressObj?.achievement?.map((a) => {

@@ -53,7 +53,7 @@ export default function WordCard({
   const statusClasses = STATUS_CLASSES[status] ?? STATUS_CLASSES.new;
 
   return (
-    <div className="mx-auto my-6 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+    <div className="mx-auto my-6 p-6 bg-white rounded-xl shadow-xs border border-gray-100">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-sm text-gray-500 uppercase">5 Words of the Day</p>
@@ -66,7 +66,7 @@ export default function WordCard({
               onClick={playAudio}
               aria-label="play pronunciation"
               disabled={audio === null}
-              className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/5 text-primary ${
+              className={`shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/5 text-primary ${
                 audio === null
                   ? "opacity-50 cursor-not-allowed"
                   : "hover:bg-primary/15 cursor-pointer"
@@ -79,11 +79,11 @@ export default function WordCard({
             </button>
           </div>
           <div className="mt-4 flex items-center gap-3">
-            <span className="uppercase inline-flex items-center px-2.5 py-1 rounded text-xs font-medium bg-yellow-50 text-yellow-800">
+            <span className="uppercase inline-flex items-center px-2.5 py-1 rounded-sm text-xs font-medium bg-yellow-50 text-yellow-800">
               {pos}
             </span>
             <span
-              className={`uppercase inline-flex items-center px-2.5 py-1 rounded text-xs font-medium ${statusClasses.badge}`}
+              className={`uppercase inline-flex items-center px-2.5 py-1 rounded-sm text-xs font-medium ${statusClasses.badge}`}
             >
               <span
                 className={`relative inline-flex rounded-full h-2 w-2 mr-2 ${statusClasses.dot}`}
@@ -124,7 +124,7 @@ export default function WordCard({
         className={
           "transition-all duration-300 ease-out " +
           (showDetails
-            ? "max-h-[800px] opacity-100 translate-y-0"
+            ? "max-h-200 opacity-100 translate-y-0"
             : "max-h-0 opacity-0 -translate-y-2 pointer-events-none")
         }
       >
@@ -134,7 +134,7 @@ export default function WordCard({
         {example_sentences.length > 0 && (
           <div className="mt-6">
             <h3 className="text-xs text-gray-500 uppercase">Example(s)</h3>
-            <div className="mt-3 bg-gray-50 border border-gray-100 rounded p-4">
+            <div className="mt-3 bg-gray-50 border border-gray-100 rounded-sm p-4">
               {example_sentences.map((s) => (
                 <div key={s.spanish} className="mb-3">
                   <p className="text-gray-800">{s.spanish}</p>
@@ -168,7 +168,7 @@ export default function WordCard({
               changeStatus && changeStatus(id, "learning");
               nextWord();
             }}
-            className="px-5 py-2 border border-primary bg-background-light text-primary rounded-xl shadow-sm hover:bg-primary/5"
+            className="px-5 py-2 border border-primary bg-background-light text-primary rounded-xl shadow-xs hover:bg-primary/5"
           >
             Mark as Learning
           </button>
@@ -177,7 +177,7 @@ export default function WordCard({
               changeStatus && changeStatus(id, "known");
               nextWord();
             }}
-            className="px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-sm hover:bg-gray-100"
+            className="px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
           >
             I Know This
           </button>

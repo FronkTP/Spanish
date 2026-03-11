@@ -11,7 +11,7 @@ export function PracticeModeCard({
   return (
     <Link to={path}>
       <div
-        className={`w-full p-4 flex gap-4 bg-white shadow-sm rounded-xl border border-gray-100 transition hover:-translate-y-1 ${hoverBorder}`}
+        className={`w-full p-4 flex gap-4 bg-white shadow-xs rounded-xl border border-gray-100 transition hover:-translate-y-1 ${hoverBorder}`}
       >
         <div
           className={`h-20 w-20 flex justify-center items-center rounded-xl ${bg}`}
