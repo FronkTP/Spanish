@@ -69,8 +69,6 @@ function shuffleArray(array) {
 }
 
 export async function getListeningPractice(userId) {
-  const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
-
   const { data: listeningWord, error: listeningWordErr } = await supabase
     .from("user_words")
     .select(
@@ -83,7 +81,6 @@ export async function getListeningPractice(userId) {
     `,
     )
     .eq("user_id", userId)
-    .lt("last_seen", sixHoursAgo.toISOString())
     .order("last_seen", { ascending: true })
     .not("words.audio", "is", null)
     .limit(1);
