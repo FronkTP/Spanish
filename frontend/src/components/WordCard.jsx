@@ -162,7 +162,6 @@ export default function WordCard({
           <ChevronLeftIcon className="size-4" />
         </button>
         <div className="flex gap-3">
-          {id}
           <button
             onClick={() => {
               changeStatus && changeStatus(id, "learning");
