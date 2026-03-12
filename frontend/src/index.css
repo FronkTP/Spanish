@@ -38,3 +38,7 @@
 body {
   @apply text-text-dark;
 }
+
+button {
+  cursor: pointer;
+}

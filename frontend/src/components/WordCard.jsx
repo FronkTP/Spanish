@@ -69,7 +69,7 @@ export default function WordCard({
               className={`shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/5 text-primary ${
                 audio === null
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-primary/15 cursor-pointer"
+                  : "hover:bg-primary/15"
               } translate-y-2`}
               title={`${
                 audio === null ? "Audio not available for this word" : ""
