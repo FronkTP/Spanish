@@ -190,7 +190,7 @@ export default function WordCard({
         </button>
       </div>
 
-      <audio ref={audioRef} src={audio} preload="none" />
+      <audio ref={audioRef} src={audio}/>
     </div>
   );
 }
