@@ -70,49 +70,49 @@ export default function Progress() {
           <div className="grid grid-cols-4 sm:grid-cols-7 gap-3 mb-6">
             <div className="flex flex-col items-center text-xs">
               <span className="mb-2">M</span>
-              <div className="w-8 h-8 rounded-md bg-accent text-white flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-accent text-white flex items-center justify-center">
                 ✓
               </div>
             </div>
             <div className="flex flex-col items-center text-xs">
               <span className="mb-2">T</span>
-              <div className="w-8 h-8 rounded-md bg-accent text-white flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-accent text-white flex items-center justify-center">
                 ✓
               </div>
             </div>
             <div className="flex flex-col items-center text-xs">
               <span className="mb-2">W</span>
-              <div className="w-8 h-8 rounded-md bg-accent text-white flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-accent text-white flex items-center justify-center">
                 ✓
               </div>
             </div>
             <div className="flex flex-col items-center text-xs">
               <span className="mb-2">T</span>
-              <div className="w-8 h-8 rounded-md bg-accent text-white flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-accent text-white flex items-center justify-center">
                 ✓
               </div>
             </div>
             <div className="flex flex-col items-center text-xs col-start-2 sm:col-start-auto">
               <span className="mb-2">F</span>
-              <div className="w-8 h-8 rounded-md bg-accent text-white flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-accent text-white flex items-center justify-center">
                 ✓
               </div>
             </div>
             <div className="flex flex-col items-center text-xs">
               <span className="mb-2">S</span>
-              <div className="w-8 h-8 rounded-md border border-dashed border-primary/50 bg-gray-200 flex items-center justify-center opacity-60">
+              <div className="w-8 h-8 rounded-xl border border-dashed border-primary/50 bg-gray-200 flex items-center justify-center opacity-60">
                 &nbsp;
               </div>
             </div>
             <div className="flex flex-col items-center text-xs">
               <span className="mb-2">S</span>
-              <div className="w-8 h-8 rounded-md border border-dashed border-primary/50 bg-gray-200 flex items-center justify-center opacity-60">
+              <div className="w-8 h-8 rounded-xl border border-dashed border-primary/50 bg-gray-200 flex items-center justify-center opacity-60">
                 &nbsp;
               </div>
             </div>
           </div>
 
-          <div className="bg-background-light p-4 rounded-lg">
+          <div className="bg-background-light p-4 rounded-xl">
             <div className="flex justify-between items-center mb-2">
               <div className="text-sm font-semibold">Weekly Goal</div>
               <div className="text-sm font-bold text-accent">71%</div>

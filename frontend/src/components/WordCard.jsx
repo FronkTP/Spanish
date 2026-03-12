@@ -134,7 +134,7 @@ export default function WordCard({
         {example_sentences.length > 0 && (
           <div className="mt-6">
             <h3 className="text-xs text-gray-500 uppercase">Example(s)</h3>
-            <div className="mt-3 bg-gray-50 border border-gray-100 rounded-sm p-4">
+            <div className="mt-3 bg-gray-50 border border-gray-100 rounded-xl p-4">
               {example_sentences.map((s) => (
                 <div key={s.spanish} className="mb-3">
                   <p className="text-gray-800">{s.spanish}</p>
