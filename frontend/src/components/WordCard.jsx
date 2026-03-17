@@ -121,14 +121,9 @@ export default function WordCard({
           (Array.isArray(english) ? english.join(", ") : english)}
       </p> */}
       <div
-        className={
-          "transition-all duration-300 ease-out " +
-          (showDetails
-            ? "max-h-200 opacity-100 translate-y-0"
-            : "max-h-0 opacity-0 -translate-y-2 pointer-events-none")
-        }
+        className={`transition-all duration-300 ease-out ${showDetails ? "max-h-200 opacity-100" : "max-h-0 opacity-0"}`}
       >
-        <p className="mt-6 text-lg text-gray-700">
+        <p className={`text-lg text-gray-700 ${showDetails && "mt-6"}`}>
           {Array.isArray(english) ? english.join(", ") : english}
         </p>
         {example_sentences.length > 0 && (
@@ -189,7 +184,7 @@ export default function WordCard({
         </button>
       </div>
 
-      <audio ref={audioRef} src={audio}/>
+      <audio ref={audioRef} src={audio} />
     </div>
   );
 }
