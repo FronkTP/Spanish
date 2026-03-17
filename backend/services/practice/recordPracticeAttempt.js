@@ -17,7 +17,9 @@ export async function recordPracticeAttempt(
 
   let newStatus = userWord.status;
 
-  if (outcome === "incorrect" && userWord.status === "known") {
+  if (outcome === "correct") {
+    newStatus = "known";
+  } else if (outcome === "incorrect" && userWord.status === "known") {
     newStatus = "learning";
   }
 
