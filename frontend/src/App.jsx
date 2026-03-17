@@ -7,6 +7,7 @@ import PracticeLayout from "./pages/practice/PracticeLayout";
 import Practice from "./pages/practice/Practice";
 import ListeningPractice from "./pages/practice/ListeningPractice";
 import FlashcardPractice from "./pages/practice/FlashcardPractice";
+import TypingPractice from "./pages/practice/TypingPractice";
 import NotFound from "./pages/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -22,6 +23,7 @@ function App() {
             <Route index element={<Practice />} />
             <Route path="listening" element={<ListeningPractice />} />
             <Route path="flashcard" element={<FlashcardPractice />} />
+            <Route path="typing" element={<TypingPractice />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

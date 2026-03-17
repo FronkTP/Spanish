@@ -1,5 +1,5 @@
 import { PracticeModeCard } from "../../components/PracticeModeCard";
-import { ArrowPathIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, LanguageIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
 
 export default function Practice() {
   return (
@@ -26,6 +26,14 @@ export default function Practice() {
           bg="bg-accent"
           hoverBorder="hover:border-accent"
           Icon={ArrowPathIcon}
+        />
+        <PracticeModeCard
+          path="/practice/typing"
+          title="Translating"
+          subtitle="Type the correct Spanish word given its English translation"
+          bg="bg-primary"
+          hoverBorder="hover:border-primary"
+          Icon={LanguageIcon}
         />
       </div>
     </div>
