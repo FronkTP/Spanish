@@ -54,7 +54,7 @@ export default function Flashcard({ word, isFlipped, setIsFlipped }) {
 
   return (
     <div
-      className="w-full max-w-[36em] min-h-80 h-[calc(100dvh-240px)] max-h-[96em] p-6 bg-white rounded-xl shadow-xs border border-gray-100 cursor-pointer group"
+      className="w-full max-w-3xl min-h-80 h-[calc(100dvh-240px)] max-h-[96em] p-6 bg-white rounded-xl shadow-xs border border-gray-100 cursor-pointer group"
       onClick={handleClick}
     >
       <div

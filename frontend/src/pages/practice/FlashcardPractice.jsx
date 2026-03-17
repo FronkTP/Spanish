@@ -65,7 +65,7 @@ export default function FlashcardPractice() {
         isFlipped={isFlipped}
         setIsFlipped={setIsFlipped}
       />
-      <div className="w-full max-w-[36em] flex gap-4 items-center">
+      <div className="w-full max-w-3xl flex gap-4 items-center">
         {isFlipped && (
           <div className="w-full flex gap-3 justify-center transition-opacity">
             <button
