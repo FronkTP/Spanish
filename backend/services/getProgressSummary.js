@@ -1,4 +1,4 @@
-import { supabase } from "../db/supabase.js";
+import { supabase } from "../db/supabaseServerClient.js";
 
 export async function getProgressSummaryForUser(userId) {
   const { count: userKnownWordsCount, error: userKnownWordsCountErr } =
