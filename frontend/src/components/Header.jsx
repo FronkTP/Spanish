@@ -27,6 +27,12 @@ export default function Header() {
           >
             Practice
           </Link>
+          <Link
+            to="/analyze"
+            className="text-gray-600 hover:text-primary transition-colors"
+          >
+            Analyze
+          </Link>
         </nav>
       </div>
     </header>

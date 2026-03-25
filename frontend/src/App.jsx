@@ -8,6 +8,7 @@ import Practice from "./pages/practice/Practice";
 import ListeningPractice from "./pages/practice/ListeningPractice";
 import FlashcardPractice from "./pages/practice/FlashcardPractice";
 import TypingPractice from "./pages/practice/TypingPractice";
+import TextAnalyzer from "./pages/TextAnalyzer";
 import NotFound from "./pages/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="flashcard" element={<FlashcardPractice />} />
             <Route path="typing" element={<TypingPractice />} />
           </Route>
+          <Route path="/analyze" element={<TextAnalyzer />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
