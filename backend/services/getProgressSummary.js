@@ -10,7 +10,7 @@ export async function getProgressSummaryForUser(userId) {
 
   if (userKnownWordsCountErr) throw userKnownWordsCountErr;
 
-  const j = {
+  const returnObj = {
     streak: null,
     wordKnown: userKnownWordsCount,
     xp: null,
@@ -25,5 +25,5 @@ export async function getProgressSummaryForUser(userId) {
       },
     ],
   };
-  return j;
+  return returnObj;
 }
