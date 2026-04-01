@@ -10,10 +10,29 @@ import FlashcardPractice from "./pages/practice/FlashcardPractice";
 import TypingPractice from "./pages/practice/TypingPractice";
 import TextAnalyzer from "./pages/TextAnalyzer";
 import NotFound from "./pages/NotFound";
+import { useEffect, useState } from "react";
+import Auth from "./Auth";
+import { supabase } from "./supabaseClient";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  return (
+  const [session, setSession] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return session ? (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
@@ -31,6 +50,8 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+  ) : (
+    <Auth />
   );
 }
 

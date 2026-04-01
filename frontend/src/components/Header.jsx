@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { supabase } from "../supabaseClient";
 
 export default function Header() {
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Logout error:", error.message);
+    }
+  };
+
   return (
     <header className="w-full bg-white shadow-xs border-b-2 border-primary">
       <div className="max-w-7xl mx-auto flex justify-between px-4 py-3">
@@ -34,6 +42,7 @@ export default function Header() {
             Analyze
           </Link>
         </nav>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </header>
   );
