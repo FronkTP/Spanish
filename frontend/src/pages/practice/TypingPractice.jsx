@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import PracticeSummary from "../../components/PracticeSummary";
 
-export default function FlashcardPractice() {
+export default function TypingPractice() {
   const [word, setWord] = useState({});
   const [typedWord, setTypedWord] = useState("");
   const [countedWordId, setCountedWordId] = useState(null);
@@ -12,6 +12,7 @@ export default function FlashcardPractice() {
   const [isFinished, setIsFinished] = useState(false);
 
   const loadQuestion = () => {
+    setTypedWord("");
     fetch("/api/practice/typing")
       .then((response) => response.json())
       .then((json) => {
@@ -31,7 +32,8 @@ export default function FlashcardPractice() {
   const checkAnswer = (e) => {
     e.preventDefault();
 
-    const outcome = word.spanish === typedWord ? "correct" : "incorrect";
+    const outcome =
+      word.spanish === typedWord.toLowerCase().trim() ? "correct" : "incorrect";
     setShowIsCorrect(true);
     if (countedWordId !== word.id) {
       setTotal((prev) => prev + 1);
@@ -55,7 +57,6 @@ export default function FlashcardPractice() {
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
-        loadQuestion();
       });
   };
 
@@ -110,7 +111,7 @@ export default function FlashcardPractice() {
                     />
                     <div>
                       {showIsCorrect ? (
-                        word.spanish === typedWord ? (
+                        word.spanish === typedWord.toLowerCase().trim() ? (
                           <CheckCircleIcon className="size-6 text-emerald-600" />
                         ) : (
                           <XCircleIcon className="size-6 text-primary" />
