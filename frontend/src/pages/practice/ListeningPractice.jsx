@@ -46,7 +46,7 @@ export default function ListeningPractice() {
       }
     };
 
-    tryPlay(); 
+    tryPlay();
   }, [practice?.wordMetadata?.audio]);
 
   const playAudio = () => {
@@ -66,19 +66,19 @@ export default function ListeningPractice() {
       console.log("correct");
       setScore((prev) => prev + 1);
     }
-    // fetch("/api/practice/attempt", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     wordId: practice.wordMetadata.id,
-    //     practiceMode: "listening",
-    //     outcome,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((json) => console.log(json));
+    fetch("/api/practice/attempt", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        wordId: practice.wordMetadata.id,
+        practiceMode: "listening",
+        outcome,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
   };
 
   const nextQuestion = () => {
@@ -89,6 +89,15 @@ export default function ListeningPractice() {
 
   const finishSession = () => {
     setIsFinished(true);
+  };
+
+  const restartSession = () => {
+    setScore(0);
+    setTotal(0);
+    setSelectedChoice(null);
+    setShowIsCorrect(false);
+    setIsFinished(false);
+    loadQuestion();
   };
 
   return (
@@ -102,8 +111,8 @@ export default function ListeningPractice() {
             Score: {score} / {total}
           </p>
           <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-            <h1 className="mb-4 text-4xl font-bold text-center">
-              Listen and choose the correct word
+            <h1 className="mb-6 text-4xl font-bold text-center">
+              Listen and Choose the Correct Word
             </h1>
             <div className="text-center">
               <div className="relative size-36 flex items-center justify-center">
@@ -175,7 +184,12 @@ export default function ListeningPractice() {
           />
         </div>
       ) : (
-        <PracticeSummary mode={"Listening"} score={score} total={total} />
+        <PracticeSummary
+          mode={"Listening"}
+          score={score}
+          total={total}
+          onPracticeAgain={restartSession}
+        />
       )}
     </>
   );
