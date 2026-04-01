@@ -4,8 +4,14 @@ import {
   RectangleStackIcon,
   BoltIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
-export default function PracticeSummary({ mode, score, total }) {
+export default function PracticeSummary({
+  mode,
+  score,
+  total,
+  onPracticeAgain,
+}) {
   const xpGained = Math.round((score / total) * 50);
   const accuracy = Math.round((score / total) * 100);
 
@@ -48,16 +54,35 @@ export default function PracticeSummary({ mode, score, total }) {
         </div>
       </div>
       <div className="mt-6 flex flex-col items-center gap-3">
-        <button className="w-full px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800">
-          Practice Again
-        </button>
+        {onPracticeAgain ? (
+          <button
+            type="button"
+            onClick={onPracticeAgain}
+            className="w-full px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800"
+          >
+            Practice Again
+          </button>
+        ) : (
+          <Link
+            to="/practice"
+            className="w-full px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800"
+          >
+            Practice Again
+          </Link>
+        )}
         <div className="w-full flex gap-3">
-          <button className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100">
+          <Link
+            to="/"
+            className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
+          >
             Go Home
-          </button>
-          <button className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100">
+          </Link>
+          <Link
+            to="/progress"
+            className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
+          >
             My Progress
-          </button>
+          </Link>
         </div>
       </div>
     </div>
