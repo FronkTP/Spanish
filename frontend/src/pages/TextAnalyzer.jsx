@@ -33,10 +33,10 @@ const DIFFICULTY_STYLES = {
 };
 
 const BUCKET_VISUALS = [
-  { key: "known", label: "Mastered", color: "var(--color-primary)" },
+  { key: "known", label: "Known", color: "var(--color-primary)" },
   { key: "learning", label: "Learning", color: "var(--color-accent)" },
   { key: "new", label: "New", color: TW_COLORS.sky700 },
-  { key: "unknown", label: "Not in Dictionary", color: TW_COLORS.gray200 },
+  { key: "unknown", label: "Not in Word List", color: TW_COLORS.gray200 },
 ];
 
 export default function TextAnalyzer() {
