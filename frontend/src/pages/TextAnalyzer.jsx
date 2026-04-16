@@ -39,6 +39,8 @@ const BUCKET_VISUALS = [
   { key: "unknown", label: "Not in Word List", color: TW_COLORS.gray200 },
 ];
 
+const MAX_TEXT_LENGTH = 500;
+
 export default function TextAnalyzer() {
   const [text, setText] = useState("");
   const [statsObj, setStatsObj] = useState({});
@@ -53,6 +55,11 @@ export default function TextAnalyzer() {
   const difficultyMeta =
     DIFFICULTY_STYLES[difficulty] ?? DIFFICULTY_STYLES.default;
   const recognitionRate = buckets?.recognized?.percentage ?? 0;
+  const characterCount = text.length;
+  const textUsagePercentage = Math.min(
+    100,
+    (characterCount / MAX_TEXT_LENGTH) * 100,
+  );
 
   const chartData = useMemo(
     () =>
@@ -99,8 +106,8 @@ export default function TextAnalyzer() {
       setErr("The text should not be empty.");
       setStatsObj({});
       return;
-    } else if (text.length > 500) {
-      setErr("The text is over the 500 characters limit.");
+    } else if (text.length > MAX_TEXT_LENGTH) {
+      setErr(`The text is over the ${MAX_TEXT_LENGTH} characters limit.`);
       setStatsObj({});
       return;
     }
@@ -141,20 +148,41 @@ export default function TextAnalyzer() {
         <textarea
           name="text"
           value={text}
-          maxLength={500}
+          maxLength={MAX_TEXT_LENGTH}
           placeholder="Paste the text here..."
           onChange={(e) => {
             setText(e.target.value);
           }}
           className="w-full h-40 p-4 rounded-xl border border-gray-100 bg-white shadow-xs"
         ></textarea>
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-6 px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-80"
-        >
-          {loading ? "Analyzing..." : "Analyze Text"}
-        </button>
+        <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="w-full flex flex-1 gap-3 items-center sm:min-w-0">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+              <div
+                className={`h-full rounded-full transition-all duration-200 ${
+                  characterCount >= MAX_TEXT_LENGTH ? "bg-primary" : "bg-accent"
+                }`}
+                style={{ width: `${textUsagePercentage}%` }}
+                role="progressbar"
+                aria-label="Text character limit usage"
+                aria-valuemin={0}
+                aria-valuemax={MAX_TEXT_LENGTH}
+                aria-valuenow={characterCount}
+              />
+            </div>
+            <p className="mb-2 flex items-center justify-between text-sm font-medium text-gray-600">
+              {characterCount}/{MAX_TEXT_LENGTH}
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-80"
+          >
+            {loading ? "Analyzing..." : "Analyze Text"}
+          </button>
+        </div>
       </form>
 
       {err && <p className="mt-3 text-sm text-primary">{err}</p>}
@@ -169,7 +197,7 @@ export default function TextAnalyzer() {
               >
                 {difficultyMeta.label}
               </p>
-              <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+              <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-gray-200">
                 <div
                   className={`h-full rounded-full ${difficultyMeta.bgClass}`}
                   style={{ width: `${difficultyMeta.meter}%` }}
