@@ -11,9 +11,9 @@ export default function ComingSoon() {
       <h1 className="mb-2 text-4xl font-bold text-center">
         !Próximamente¡
       </h1>
-      <p className="text-xl text-gray-600 text-center">Coming Soon</p>
+      <p className="text-xl text-text-muted text-center">Coming Soon</p>
 
-      <p className="mt-10 text-xs font-semibold tracking-[0.2em] text-gray-400">
+      <p className="mt-10 text-xs font-semibold tracking-[0.2em] text-text-faint">
         YOU CAN BROWSE OTHER PAGES FOR NOW
       </p>
 
@@ -24,7 +24,7 @@ export default function ComingSoon() {
               <GlobeEuropeAfricaIcon className="size-6" />
             </div>
             <h3 className="text-lg font-semibold mb-1">Daily Word</h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-text-subtle">
               Expand your vocabulary every day
             </p>
           </div>
@@ -35,7 +35,7 @@ export default function ComingSoon() {
               <ArrowTrendingUpIcon className="size-6" />
             </div>
             <h3 className="text-lg font-semibold mb-1">My Progress</h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-text-subtle">
               Review your learning journey
             </p>
           </div>
@@ -46,7 +46,7 @@ export default function ComingSoon() {
               <SpeakerWaveIcon className="size-6" />
             </div>
             <h3 className="text-lg font-semibold mb-1">Listening Quiz</h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-text-subtle">
               Test your knowledge with listening quiz
             </p>
           </div>
