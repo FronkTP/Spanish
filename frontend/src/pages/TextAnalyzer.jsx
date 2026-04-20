@@ -26,7 +26,7 @@ const DIFFICULTY_STYLES = {
   },
   default: {
     label: "Not analyzed",
-    textClass: "text-gray-600",
+    textClass: "text-text-muted",
     bgClass: "bg-gray-600",
     meter: 0,
   },
@@ -143,7 +143,12 @@ export default function TextAnalyzer() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="mb-6 text-5xl font-extrabold text-center">TextAnalyzer</h1>
+      <h1 className="mb-6 text-5xl font-extrabold text-center">
+        Text Analysis
+      </h1>
+      <h2 className="mb-6 text-xl text-center text-text-muted">
+        Understand how well you know this text.
+      </h2>
       <form onSubmit={handleSubmit}>
         <textarea
           name="text"
@@ -170,7 +175,7 @@ export default function TextAnalyzer() {
                 aria-valuenow={characterCount}
               />
             </div>
-            <p className="mb-2 flex items-center justify-between text-sm font-medium text-gray-600">
+            <p className="mb-2 flex items-center justify-between text-sm font-medium text-text-muted">
               {characterCount}/{MAX_TEXT_LENGTH}
             </p>
           </div>
@@ -224,7 +229,7 @@ export default function TextAnalyzer() {
                     <p className="text-4xl font-extrabold">
                       {totals.uniqueWords}
                     </p>
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-400">
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-text-faint">
                       Words
                     </p>
                   </div>
@@ -247,11 +252,11 @@ export default function TextAnalyzer() {
                           style={{ backgroundColor: segment.color }}
                           aria-hidden="true"
                         />
-                        <p className="text-base font-semibold text-slate-950">
+                        <p className="text-base font-semibold">
                           {segment.label}
                         </p>
                       </div>
-                      <p className="text-base font-semibold text-blue-900/70">
+                      <p className="text-base font-semibold text-text-muted">
                         {segment.percentage}%
                       </p>
                     </li>

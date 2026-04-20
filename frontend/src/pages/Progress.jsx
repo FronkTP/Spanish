@@ -134,7 +134,7 @@ export default function Progress() {
                 <AchievementBadge key={a.title} title={a.title} Icon={Icon} />
               );
             })}
-            <div className="text-sm font-semibold text-gray-500 col-span-2">
+            <div className="text-sm font-semibold text-text-subtle col-span-2">
               Keep practising to unlock more achievements...
             </div>
           </div>
