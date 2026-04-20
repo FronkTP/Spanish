@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <div className="max-w-3xl mx-auto">
       <h1 className="mb-2 text-4xl font-bold">!Bienvenido¡</h1>
-      <h2 className="mb-6 text-xl">Let’s learn Spanish one word at a time.</h2>
+      <h2 className="mb-6 text-xl text-text-muted">Let’s learn Spanish one word at a time.</h2>
       {!words || words.length === 0 ? (
         <p>Loading...</p>
       ) : (

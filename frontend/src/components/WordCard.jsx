@@ -56,7 +56,9 @@ export default function WordCard({
     <div className="mx-auto my-6 p-6 bg-white rounded-xl shadow-xs border border-gray-100">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-gray-500 uppercase">5 Words of the Day</p>
+          <p className="text-sm text-text-muted uppercase">
+            5 Words of the Day
+          </p>
           <div className="flex items-center gap-8">
             <h1 className="first-letter:uppercase mt-2 text-5xl sm:text-6xl font-extrabold text-background-dark">
               {spanish}
@@ -95,7 +97,7 @@ export default function WordCard({
 
         <div className="flex items-start">
           <button
-            className="p-2 text-gray-500 hover:text-gray-700"
+            className="p-2 text-text-faint hover:text-text-muted"
             aria-label="bookmark"
           >
             <BookmarkIcon className="size-6" />
@@ -123,17 +125,17 @@ export default function WordCard({
       <div
         className={`transition-all duration-300 ease-out ${showDetails ? "max-h-200 opacity-100" : "max-h-0 opacity-0"}`}
       >
-        <p className={`text-lg text-gray-700 ${showDetails && "mt-6"}`}>
+        <p className={`text-lg ${showDetails && "mt-6"}`}>
           {Array.isArray(english) ? english.join(", ") : english}
         </p>
         {example_sentences.length > 0 && (
           <div className="mt-6">
-            <h3 className="text-xs text-gray-500 uppercase">Example(s)</h3>
+            <h3 className="text-xs text-text-muted uppercase">Example(s)</h3>
             <div className="h-44 mt-3 bg-gray-50 border border-gray-100 rounded-xl p-4 overflow-auto">
               {example_sentences.map((s) => (
                 <div key={s.spanish} className="mb-3">
-                  <p className="text-gray-800">{s.spanish}</p>
-                  <p className="text-gray-500 text-sm">{s.english}</p>
+                  <p>{s.spanish}</p>
+                  <p className="text-text-subtle text-sm">{s.english}</p>
                 </div>
               ))}
             </div>
@@ -141,7 +143,7 @@ export default function WordCard({
         )}
         {false && (
           <div className="mt-6">
-            <h3 className="text-xs text-gray-500 uppercase">
+            <h3 className="text-xs text-text-muted uppercase">
               Conjugation Table
             </h3>
             <p>{JSON.stringify(conjugations)}</p>
@@ -152,7 +154,7 @@ export default function WordCard({
       <div className="mt-6 flex gap-4 items-center justify-between">
         <button
           onClick={prevWord}
-          className="px-4 py-2 rounded-full border border-gray-500 bg-background-light text-gray-500 hover:bg-gray-50"
+          className="px-4 py-2 rounded-full border border-gray-500 bg-background-light text-text-subtle hover:bg-gray-50"
         >
           <ChevronLeftIcon className="size-4" />
         </button>
@@ -171,14 +173,14 @@ export default function WordCard({
               changeStatus && changeStatus(id, "known");
               nextWord();
             }}
-            className="px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
+            className="px-5 py-2 border border-gray-700 bg-background-light rounded-xl shadow-xs hover:bg-gray-100"
           >
             I Know This
           </button>
         </div>
         <button
           onClick={nextWord}
-          className="px-4 py-2 rounded-full border border-gray-500 bg-background-light text-gray-500 hover:bg-gray-50"
+          className="px-4 py-2 rounded-full border border-gray-500 bg-background-light text-text-subtle hover:bg-gray-50"
         >
           <ChevronRightIcon className="size-4" />
         </button>

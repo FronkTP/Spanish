@@ -3,7 +3,10 @@
 @theme {
   --color-primary: #aa151b;
   --color-accent: #f1bf00;
-  --color-text-dark: #1c1917;
+  --color-text-default: #1c1917;
+  --color-text-muted: #4b5563;
+  --color-text-subtle: #6b7280;
+  --color-text-faint: #9ca3af;
   --color-background-light: #fdfbf7;
   --color-background-dark: #1c1917;
 
@@ -36,7 +39,7 @@
 }
 
 body {
-  @apply text-text-dark;
+  @apply text-text-default;
 }
 
 button {
