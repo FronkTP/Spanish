@@ -12,7 +12,7 @@ import TextAnalyzer from "./pages/TextAnalyzer";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import Auth from "./Auth";
-import { supabase } from "./supabaseClient";
+import { supabase } from "./services/supabaseClient";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

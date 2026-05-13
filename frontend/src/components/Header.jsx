@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../services/supabaseClient";
 
 export default function Header() {
   const handleLogout = async () => {
