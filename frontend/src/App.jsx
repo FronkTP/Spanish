@@ -13,10 +13,35 @@ import NotFound from "./pages/NotFound";
 import { useEffect, useState } from "react";
 import Auth from "./Auth";
 import { supabase } from "./services/supabaseClient";
+import { apiCall } from "./utils/apiClient";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [session, setSession] = useState(false);
+
+  useEffect(() => {
+    if (!session) return;
+
+    const syncUser = async () => {
+      try {
+        await apiCall("/users/sync", {
+          method: "POST",
+          body: JSON.stringify({
+            email: session.user.email,
+            fullName:
+              session.user.user_metadata?.full_name ??
+              session.user.user_metadata?.name ??
+              null,
+            avatarUrl: session.user.user_metadata?.avatar_url ?? null,
+          }),
+        });
+      } catch (error) {
+        console.error("Failed to sync user profile:", error);
+      }
+    };
+
+    syncUser();
+  }, [session]);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
