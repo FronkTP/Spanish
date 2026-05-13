@@ -90,7 +90,7 @@ export default function TypingPractice() {
             <div className="max-w-3xl flex flex-col gap-6">
               <form onSubmit={checkAnswer}>
                 <div className="flex flex-col justify-center items-stretch mb-6 p-6 bg-white rounded-xl shadow-xs border border-gray-100">
-                  <p className="mb-2 text-xs text-gray-500 text-center uppercase">
+                  <p className="mb-2 text-xs text-text-subtle text-center uppercase">
                     Translation
                   </p>
                   <h1 className="w-full mb-6 text-center first-letter:uppercase text-4xl font-extrabold wrap-break-word">
@@ -134,7 +134,7 @@ export default function TypingPractice() {
                 {total > 0 && (
                   <button
                     onClick={() => finishSession()}
-                    className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
+                    className="w-full px-5 py-2 border border-gray-700 bg-background-light rounded-xl shadow-xs hover:bg-gray-100"
                   >
                     Finish this Session
                   </button>

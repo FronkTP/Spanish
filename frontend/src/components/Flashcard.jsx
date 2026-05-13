@@ -66,7 +66,7 @@ export default function Flashcard({ word, isFlipped, setIsFlipped }) {
         <div className="absolute inset-0 rounded-xl backface-hidden">
           <div className="relative h-full min-w-0 flex flex-col">
             <div className="absolute top-0 right-0 flex justify-end">
-              <ArrowPathIcon className="size-6 text-gray-500" />
+              <ArrowPathIcon className="size-6 text-text-faint" />
             </div>
             <div className="h-full flex flex-col items-center justify-center gap-6">
               <div className="flex items-center gap-8">
@@ -108,7 +108,7 @@ export default function Flashcard({ word, isFlipped, setIsFlipped }) {
             }`}
           >
             <div className="absolute top-0 right-0 flex justify-end">
-              <ArrowPathIcon className="size-6 text-gray-500" />
+              <ArrowPathIcon className="size-6 text-text-faint" />
             </div>
             <div className="w-full flex shrink-0 justify-center items-center pb-4 gap-8">
               <h1 className="text-center first-letter:uppercase text-5xl sm:text-6xl font-extrabold text-primary wrap-break-word">
@@ -141,19 +141,22 @@ export default function Flashcard({ word, isFlipped, setIsFlipped }) {
                   : "justify-center"
               }`}
             >
-              <p className="w-full pr-1 text-center first-letter:uppercase text-2xl text-gray-700 wrap-break-word">
+              {/* <p className="w-full pr-1 text-center first-letter:uppercase text-2xl text-text-muted wrap-break-word">
+                {original_english}
+              </p> */}
+              <p className="w-full pr-1 text-center first-letter:uppercase text-2xl text-text-muted wrap-break-word">
                 {Array.isArray(english) ? english.join(", ") : english}
               </p>
               {example_sentences && example_sentences.length > 0 && (
                 <div className="w-full">
-                  <h3 className="text-xs text-gray-500 uppercase">
+                  <h3 className="text-xs text-text-subtle uppercase">
                     Example(s)
                   </h3>
                   <div className="mt-3 bg-gray-50 border border-gray-100 rounded-xl p-4">
                     {example_sentences.map((s) => (
                       <div key={s.spanish} className="mb-3">
-                        <p className="text-gray-800">{s.spanish}</p>
-                        <p className="text-gray-500 text-sm">{s.english}</p>
+                        <p className="text-text-default">{s.spanish}</p>
+                        <p className="text-text-subtle text-sm">{s.english}</p>
                       </div>
                     ))}
                   </div>

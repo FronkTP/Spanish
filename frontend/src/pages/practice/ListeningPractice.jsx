@@ -104,7 +104,7 @@ export default function ListeningPractice() {
     <>
       {!isFinished ? (
         <div>
-          <pre className="max-w-full overflow-x-auto text-xs text-gray-500">
+          <pre className="max-w-full overflow-x-auto text-xs text-text-subtle">
             {/* {practice ? JSON.stringify(practice, null, 2) : ""} */}
           </pre>
           <p className="text-right">
@@ -161,7 +161,7 @@ export default function ListeningPractice() {
               {total > 0 && (
                 <button
                   onClick={() => finishSession()}
-                  className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
+                  className="w-full px-5 py-2 border border-gray-700 bg-background-light rounded-xl shadow-xs hover:bg-gray-100"
                 >
                   Finish this Session
                 </button>

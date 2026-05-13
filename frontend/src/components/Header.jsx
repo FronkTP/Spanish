@@ -18,26 +18,26 @@ export default function Header() {
         <nav className="flex items-center gap-6">
           <Link
             to="/"
-            className="text-gray-600 hover:text-primary transition-colors"
+            className="text-text-muted hover:text-primary transition-colors"
           >
             Home
           </Link>
           {/* <Link to="/all">1000</Link> */}
           <Link
             to="/progress"
-            className="text-gray-600 hover:text-primary transition-colors"
+            className="text-text-muted hover:text-primary transition-colors"
           >
             Progress
           </Link>
           <Link
             to="/practice"
-            className="text-gray-600 hover:text-primary transition-colors"
+            className="text-text-muted hover:text-primary transition-colors"
           >
             Practice
           </Link>
           <Link
             to="/analyze"
-            className="text-gray-600 hover:text-primary transition-colors"
+            className="text-text-muted hover:text-primary transition-colors"
           >
             Analyze
           </Link>

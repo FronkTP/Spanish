@@ -24,7 +24,7 @@ export default function PracticeSummary({
       </div>
 
       <h2 className="text-2xl font-bold">¡Buen trabajo!</h2>
-      <p className="mt-1 text-sm text-gray-500">
+      <p className="mt-1 text-sm text-text-muted">
         You&apos;ve completed your {mode} practice.
       </p>
 
@@ -34,7 +34,7 @@ export default function PracticeSummary({
             <CheckIcon className="size-4" />
           </div>
           <div className="text-lg font-semibold">{accuracy} %</div>
-          <div className="text-xs uppercase text-gray-500">Accuracy</div>
+          <div className="text-xs uppercase text-text-muted">Accuracy</div>
         </div>
 
         <div className="rounded-xl border bg-background-light px-4 py-5">
@@ -42,15 +42,15 @@ export default function PracticeSummary({
             <RectangleStackIcon className="size-4" />
           </div>
           <div className="text-lg font-semibold">{total}</div>
-          <div className="text-xs uppercase text-gray-500">Questions</div>
+          <div className="text-xs uppercase text-text-muted">Questions</div>
         </div>
 
         <div className="rounded-xl border bg-background-light px-4 py-5">
-          <div className="mx-auto mb-2 flex size-9 items-center justify-center rounded-xl bg-gray-100 text-gray-600">
+          <div className="mx-auto mb-2 flex size-9 items-center justify-center rounded-xl bg-gray-100 text-text-muted">
             <BoltIcon className="size-4" />
           </div>
           <div className="text-lg font-semibold">+{xpGained} XP</div>
-          <div className="text-xs uppercase text-gray-500">Gained</div>
+          <div className="text-xs uppercase text-text-muted">Gained</div>
         </div>
       </div>
       <div className="mt-6 flex flex-col items-center gap-3">
@@ -73,13 +73,13 @@ export default function PracticeSummary({
         <div className="w-full flex gap-3">
           <Link
             to="/"
-            className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
+            className="w-full px-5 py-2 border border-gray-700 bg-background-light rounded-xl shadow-xs hover:bg-gray-100"
           >
             Go Home
           </Link>
           <Link
             to="/progress"
-            className="w-full px-5 py-2 border border-gray-700 bg-background-light text-gray-700 rounded-xl shadow-xs hover:bg-gray-100"
+            className="w-full px-5 py-2 border border-gray-700 bg-background-light rounded-xl shadow-xs hover:bg-gray-100"
           >
             My Progress
           </Link>
