@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import WordCard from "../components/WordCard";
+import { apiCall } from "../utils/apiClient";
 
 export default function Home() {
   const [words, setWords] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    fetch("/api/words/daily")
+    apiCall("/words/daily")
       .then((response) => response.json())
-      .then((json) => setWords(json));
+      .then((json) => setWords(json))
+      .catch((err) => console.error("Failed to fetch words:", err));
     setCurrentIndex(0);
   }, []);
 
@@ -19,17 +21,15 @@ export default function Home() {
       );
     });
 
-    fetch(`/api/words/${wordId}/status`, {
+    apiCall(`/words/${wordId}/status`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         status: newStatus,
       }),
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => console.log(json))
+      .catch((err) => console.error("Failed to update word status:", err));
   };
 
   const currentWord = words[Math.min(currentIndex, words.length - 1)];

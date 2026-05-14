@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import PracticeSummary from "../../components/PracticeSummary";
+import { apiCall } from "../../utils/apiClient";
 
 export default function TypingPractice() {
   const [word, setWord] = useState({});
@@ -13,13 +14,14 @@ export default function TypingPractice() {
 
   const loadQuestion = () => {
     setTypedWord("");
-    fetch("/api/practice/typing")
+    apiCall("/practice/typing")
       .then((response) => response.json())
       .then((json) => {
         if (json.status === "ok") {
           setWord(json.practice.wordMetadata);
         }
-      });
+      })
+      .catch((err) => console.error("Failed to load question:", err));
     setShowIsCorrect(false);
   };
 
@@ -43,11 +45,8 @@ export default function TypingPractice() {
       setCountedWordId(word.id);
     }
 
-    fetch("/api/practice/attempt", {
+    apiCall("/practice/attempt", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         wordId: word.id,
         practiceMode: "typing",
@@ -57,7 +56,8 @@ export default function TypingPractice() {
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
-      });
+      })
+      .catch((err) => console.error("Failed to record attempt:", err));
   };
 
   const nextQuestion = () => {

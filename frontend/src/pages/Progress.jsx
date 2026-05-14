@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import { BookOpenIcon, FireIcon, StarIcon } from "@heroicons/react/24/outline";
 import { iconMap } from "../constants/achievementIconMap";
 import { AchievementBadge } from "../components/AchievementBadge";
+import { apiCall } from "../utils/apiClient";
 
 export default function Progress() {
   const [progressObj, setProgressObj] = useState({});
 
   useEffect(() => {
-    fetch("/api/progress")
+    apiCall("/progress")
       .then((response) => response.json())
       .then((json) => {
         setProgressObj(json);
         console.log(json);
-      });
+      })
+      .catch((err) => console.error("Failed to fetch progress:", err));
   }, []);
 
   return (

@@ -1,29 +1,31 @@
 import { useState, useEffect } from "react";
 import Flashcard from "../../components/Flashcard";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { apiCall } from "../../utils/apiClient";
 
 export default function FlashcardPractice() {
-  const [word, setWord] = useState({});
+  const [word, setWord] = useState(null);
   const [isFlipped, setIsFlipped] = useState(false);
 
   const loadQuestion = () => {
-    fetch("/api/practice/flashcard")
+    apiCall("/practice/flashcard")
       .then((response) => response.json())
       .then((json) => {
         if (json.status === "ok") {
           setWord(json.practice.wordMetadata);
+          return;
         }
-      });
+
+        setWord(null);
+      })
+      .catch((err) => console.error("Failed to load question:", err));
   };
 
   useEffect(() => loadQuestion(), []);
 
   const handleMarkIncorrect = () => {
-    fetch("/api/practice/attempt", {
+    apiCall("/practice/attempt", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         wordId: word.id,
         practiceMode: "flashcard",
@@ -35,15 +37,13 @@ export default function FlashcardPractice() {
         console.log(json);
         setIsFlipped(false);
         loadQuestion();
-      });
+      })
+      .catch((err) => console.error("Failed to record attempt:", err));
   };
 
   const handleMarkCorrect = () => {
-    fetch("/api/practice/attempt", {
+    apiCall("/practice/attempt", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         wordId: word.id,
         practiceMode: "flashcard",
@@ -55,34 +55,48 @@ export default function FlashcardPractice() {
         console.log(json);
         setIsFlipped(false);
         loadQuestion();
-      });
+      })
+      .catch((err) => console.error("Failed to record attempt:", err));
   };
 
   return (
     <div className="flex flex-col gap-6 justify-center items-center">
-      <Flashcard
-        word={word}
-        isFlipped={isFlipped}
-        setIsFlipped={setIsFlipped}
-      />
-      <div className="w-full max-w-3xl flex gap-4 items-center">
-        {isFlipped && (
-          <div className="w-full flex gap-3 justify-center transition-opacity">
-            <button
-              onClick={handleMarkIncorrect}
-              className="min-w-1/4 flex px-5 py-2 justify-center border border-primary bg-background-light text-primary rounded-xl shadow-xs hover:bg-primary/5"
-            >
-              <XMarkIcon className="size-6" />
-            </button>
-            <button
-              onClick={handleMarkCorrect}
-              className="min-w-1/4 flex px-5 py-2 justify-center border border-accent bg-background-light text-accent rounded-xl shadow-xs hover:bg-amber-50"
-            >
-              <CheckIcon className="size-6" />
-            </button>
+      {word ? (
+        <>
+          <Flashcard
+            word={word}
+            isFlipped={isFlipped}
+            setIsFlipped={setIsFlipped}
+          />
+          <div className="w-full max-w-3xl flex gap-4 items-center">
+            {isFlipped && (
+              <div className="w-full flex gap-3 justify-center transition-opacity">
+                <button
+                  onClick={handleMarkIncorrect}
+                  className="min-w-1/4 flex px-5 py-2 justify-center border border-primary bg-background-light text-primary rounded-xl shadow-xs hover:bg-primary/5"
+                >
+                  <XMarkIcon className="size-6" />
+                </button>
+                <button
+                  onClick={handleMarkCorrect}
+                  className="min-w-1/4 flex px-5 py-2 justify-center border border-accent bg-background-light text-accent rounded-xl shadow-xs hover:bg-amber-50"
+                >
+                  <CheckIcon className="size-6" />
+                </button>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      ) : (
+        <div className="w-full max-w-3xl rounded-xl border border-gray-100 bg-white px-6 py-10 text-center shadow-xs">
+          <p className="text-2xl font-semibold text-primary">
+            Learn a few more words first
+          </p>
+          <p className="mt-3 text-text-subtle">
+            You need more saved words before flashcard practice can start.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

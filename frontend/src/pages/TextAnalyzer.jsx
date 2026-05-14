@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { apiCall } from "../utils/apiClient";
 
 const TW_COLORS = {
   gray200: "oklch(92.8% 0.006 264.531)",
@@ -116,11 +117,8 @@ export default function TextAnalyzer() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/analyze", {
+      const response = await apiCall("/analyze", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           text,
         }),

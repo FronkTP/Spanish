@@ -5,9 +5,10 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import PracticeSummary from "../../components/PracticeSummary";
+import { apiCall } from "../../utils/apiClient";
 
 export default function ListeningPractice() {
-  const [practice, setPractice] = useState({ choices: [], correctChoice: "" });
+  const [practice, setPractice] = useState(null);
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [showIsCorrect, setShowIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
@@ -15,17 +16,21 @@ export default function ListeningPractice() {
   const [isFinished, setIsFinished] = useState(false);
 
   const loadQuestion = () => {
-    setPractice({ choices: [], correctChoice: "" });
+    setPractice(null);
     setSelectedChoice(null);
     setShowIsCorrect(false);
 
-    fetch("/api/practice/listening")
+    apiCall("/practice/listening")
       .then((response) => response.json())
       .then((json) => {
         if (json.status === "ok") {
           setPractice(json.practice);
+          return;
         }
-      });
+
+        setPractice(null);
+      })
+      .catch((err) => console.error("Failed to load question:", err));
     setShowIsCorrect(false);
   };
 
@@ -66,11 +71,8 @@ export default function ListeningPractice() {
       console.log("correct");
       setScore((prev) => prev + 1);
     }
-    fetch("/api/practice/attempt", {
+    apiCall("/practice/attempt", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         wordId: practice.wordMetadata.id,
         practiceMode: "listening",
@@ -103,86 +105,97 @@ export default function ListeningPractice() {
   return (
     <>
       {!isFinished ? (
-        <div>
-          <pre className="max-w-full overflow-x-auto text-xs text-text-subtle">
-            {/* {practice ? JSON.stringify(practice, null, 2) : ""} */}
-          </pre>
-          <p className="text-right">
-            Score: {score} / {total}
-          </p>
-          <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-            <h1 className="mb-6 text-4xl font-bold text-center">
-              Listen and Choose the Correct Word
-            </h1>
-            <div className="text-center">
-              <div className="relative size-36 flex items-center justify-center">
-                <div className="absolute size-32 scale-150 rounded-full bg-primary/10"></div>
-                <div className="absolute size-32 scale-125 rounded-full bg-primary/10"></div>
-                <button
-                  onClick={playAudio}
-                  className="relative size-32 flex justify-center items-center rounded-full text-background-light bg-primary hover:bg-red-800"
-                  aria-label="play audio"
-                >
-                  <PlayIcon className="size-20" />
-                </button>
-              </div>
-              <p className="mt-8">Click to play audio</p>
-            </div>
-            {/* 3 choices */}
-            <div className="w-full flex flex-col gap-4">
-              {practice.choices.map((choice, index) => {
-                const isSelected = choice === selectedChoice;
-                const isCorrect = choice === practice.correctChoice;
-
-                return (
+        practice ? (
+          <div>
+            <pre className="max-w-full overflow-x-auto text-xs text-text-subtle">
+              {/* {practice ? JSON.stringify(practice, null, 2) : ""} */}
+            </pre>
+            <p className="text-right">
+              Score: {score} / {total}
+            </p>
+            <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
+              <h1 className="mb-6 text-4xl font-bold text-center">
+                Listen and Choose the Correct Word
+              </h1>
+              <div className="text-center">
+                <div className="relative size-36 flex items-center justify-center">
+                  <div className="absolute size-32 scale-150 rounded-full bg-primary/10"></div>
+                  <div className="absolute size-32 scale-125 rounded-full bg-primary/10"></div>
                   <button
-                    key={choice}
-                    onClick={() => handleChoiceSelect(choice)}
-                    disabled={showIsCorrect}
-                    className="flex w-full items-center gap-4 rounded-xl border bg-white px-6 py-4 text-left text-lg font-semibold shadow-xs hover:bg-gray-50"
+                    onClick={playAudio}
+                    className="relative size-32 flex justify-center items-center rounded-full text-background-light bg-primary hover:bg-red-800"
+                    aria-label="play audio"
                   >
-                    <div className="flex size-10 items-center justify-center rounded-full bg-gray-100 text-lg font-semibold">
-                      {index + 1}
-                    </div>
-                    <div className="flex-1">{choice}</div>
-                    <div className="text-black">
-                      {showIsCorrect && isCorrect && (
-                        <CheckCircleIcon className="size-6 text-emerald-600" />
-                      )}
-                      {showIsCorrect && isSelected && !isCorrect && (
-                        <XCircleIcon className="size-6 text-primary" />
-                      )}
-                    </div>
+                    <PlayIcon className="size-20" />
                   </button>
-                );
-              })}
-            </div>
-            <div className="w-full flex gap-3">
-              {total > 0 && (
-                <button
-                  onClick={() => finishSession()}
-                  className="w-full px-5 py-2 border border-gray-700 bg-background-light rounded-xl shadow-xs hover:bg-gray-100"
-                >
-                  Finish this Session
-                </button>
-              )}
-              {showIsCorrect && (
-                <button
-                  onClick={() => nextQuestion()}
-                  className="w-full px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800"
-                >
-                  Next Question
-                </button>
-              )}
-            </div>
-          </div>
+                </div>
+                <p className="mt-8">Click to play audio</p>
+              </div>
+              {/* 3 choices */}
+              <div className="w-full flex flex-col gap-4">
+                {practice.choices.map((choice, index) => {
+                  const isSelected = choice === selectedChoice;
+                  const isCorrect = choice === practice.correctChoice;
 
-          <audio
-            ref={audioRef}
-            src={practice?.wordMetadata?.audio}
-            preload="none"
-          />
-        </div>
+                  return (
+                    <button
+                      key={choice}
+                      onClick={() => handleChoiceSelect(choice)}
+                      disabled={showIsCorrect}
+                      className="flex w-full items-center gap-4 rounded-xl border bg-white px-6 py-4 text-left text-lg font-semibold shadow-xs hover:bg-gray-50"
+                    >
+                      <div className="flex size-10 items-center justify-center rounded-full bg-gray-100 text-lg font-semibold">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1">{choice}</div>
+                      <div className="text-black">
+                        {showIsCorrect && isCorrect && (
+                          <CheckCircleIcon className="size-6 text-emerald-600" />
+                        )}
+                        {showIsCorrect && isSelected && !isCorrect && (
+                          <XCircleIcon className="size-6 text-primary" />
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="w-full flex gap-3">
+                {total > 0 && (
+                  <button
+                    onClick={() => finishSession()}
+                    className="w-full px-5 py-2 border border-gray-700 bg-background-light rounded-xl shadow-xs hover:bg-gray-100"
+                  >
+                    Finish this Session
+                  </button>
+                )}
+                {showIsCorrect && (
+                  <button
+                    onClick={() => nextQuestion()}
+                    className="w-full px-5 py-2 bg-primary text-background-light rounded-xl shadow-xs hover:bg-red-800"
+                  >
+                    Next Question
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <audio
+              ref={audioRef}
+              src={practice?.wordMetadata?.audio}
+              preload="none"
+            />
+          </div>
+        ) : (
+          <div className="mx-auto w-full max-w-3xl rounded-xl border border-gray-100 bg-white px-6 py-10 text-center shadow-xs">
+            <p className="text-2xl font-semibold text-primary">
+              Learn a few more words first
+            </p>
+            <p className="mt-3 text-text-subtle">
+              You need more saved words before listening practice can start.
+            </p>
+          </div>
+        )
       ) : (
         <PracticeSummary
           mode={"Listening"}
