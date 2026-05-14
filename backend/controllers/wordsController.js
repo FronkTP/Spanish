@@ -2,7 +2,7 @@ import { getDailyWordsForUser } from "../services/getDailyWords.js";
 
 export async function wordsController(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
     const dailyWords = await getDailyWordsForUser(userId);
 
     if (!dailyWords.length) {

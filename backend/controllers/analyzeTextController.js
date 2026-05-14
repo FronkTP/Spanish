@@ -2,7 +2,7 @@ import { getTextAnalyzer } from "../services/getTextAnalyzer.js";
 
 export async function analyzeTextController(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
     const { text } = req.body;
 
     const textAnalyzer = await getTextAnalyzer(userId, text);

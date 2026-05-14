@@ -2,7 +2,7 @@ import { updateWordStatusForUser } from "../services/updateWordStatus.js";
 
 export async function statusController(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
 
     const wordId = Number(req.params.word_id);
     if (isNaN(wordId) || wordId <= 0) {

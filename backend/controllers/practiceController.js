@@ -5,7 +5,7 @@ import { recordPracticeAttempt as recordPracticeAttemptService } from "../servic
 
 export async function getListeningPractice(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
     const data = await getListeningPracticeService(userId);
     res.json(data);
   } catch (error) {
@@ -15,7 +15,7 @@ export async function getListeningPractice(req, res) {
 
 export async function getFlashcardPractice(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
     const data = await getFlashcardPracticeService(userId);
     res.json(data);
   } catch (error) {
@@ -25,7 +25,7 @@ export async function getFlashcardPractice(req, res) {
 
 export async function getTypingPractice(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
     const data = await getTypingPracticeService(userId);
     res.json(data);
   } catch (error) {
@@ -35,7 +35,7 @@ export async function getTypingPractice(req, res) {
 
 export async function recordPracticeAttempt(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
     const { wordId, practiceMode, outcome } = req.body;
     const data = await recordPracticeAttemptService(
       userId,

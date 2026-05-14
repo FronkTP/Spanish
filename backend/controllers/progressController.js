@@ -2,7 +2,7 @@ import { getProgressSummaryForUser } from "../services/getProgressSummary.js";
 
 export async function progressController(req, res) {
   try {
-    const userId = process.env.TEST_USER;
+    const userId = req.userId;
 
     const progressSummary = await getProgressSummaryForUser(userId);
 
