@@ -12,7 +12,7 @@ export async function getProgressSummaryForUser(userId) {
 
   const returnObj = {
     streak: null,
-    wordKnown: userKnownWordsCount,
+    wordKnown: Math.round((userKnownWordsCount / 1017) * 100),
     xp: null,
     achievement: [
       {
