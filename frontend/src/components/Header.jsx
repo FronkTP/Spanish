@@ -1,8 +1,47 @@
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ProfileMenu from "./ProfileMenu";
 import { supabase } from "../services/supabaseClient";
 
 export default function Header() {
-  const handleLogout = async () => {
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+
+  const anchorRef = useRef(null);
+  const avatarButtonRef = useRef(null);
+
+  const toggleShowProfileMenu = () => {
+    setShowProfileMenu((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (!showProfileMenu) return;
+
+    const onMouseDown = (e) => {
+      if (anchorRef.current && !anchorRef.current.contains(e.target)) {
+        setShowProfileMenu(false);
+        if (avatarButtonRef.current) {
+          setTimeout(() => avatarButtonRef.current.focus(), 0);
+        }
+      }
+    };
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setShowProfileMenu(false);
+        if (avatarButtonRef.current) avatarButtonRef.current.focus();
+      }
+    };
+
+    document.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", onMouseDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [showProfileMenu]);
+
+  const onLogout = async () => {
     const guestUser = localStorage.getItem("guestSession");
 
     if (guestUser) {
@@ -50,7 +89,17 @@ export default function Header() {
             Analyze
           </Link>
         </nav>
-        <button onClick={handleLogout}>Logout</button>
+        <div ref={anchorRef} className="flex relative items-center">
+          <button
+            ref={avatarButtonRef}
+            onClick={toggleShowProfileMenu}
+            aria-expanded={showProfileMenu}
+            aria-haspopup="menu"
+          >
+            user avatar
+          </button>
+          <ProfileMenu isOpen={showProfileMenu} onLogout={onLogout} />
+        </div>
       </div>
     </header>
   );
