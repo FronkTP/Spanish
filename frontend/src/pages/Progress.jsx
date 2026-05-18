@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BookOpenIcon, FireIcon, StarIcon } from "@heroicons/react/24/outline";
 import { iconMap } from "../constants/achievementIconMap";
-import { AchievementBadge } from "../components/AchievementBadge";
+import AchievementBadge from "../components/AchievementBadge";
 import { apiCall } from "../utils/apiClient";
 
 export default function Progress() {

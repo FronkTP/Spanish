@@ -1,4 +1,4 @@
-export function AchievementBadge({ title, Icon }) {
+export default function AchievementBadge({ title, Icon }) {
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="w-14 h-14 rounded-full bg-accent/20 ring-2 ring-accent flex items-center justify-center shadow-xs">
