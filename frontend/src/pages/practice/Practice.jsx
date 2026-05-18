@@ -1,5 +1,5 @@
-import { PracticeModeCard } from "../../components/PracticeModeCard";
 import { ArrowPathIcon, LanguageIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
+import { PracticeModeCard } from "../../components/PracticeModeCard";
 
 export default function Practice() {
   return (

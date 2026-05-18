@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Flashcard from "../../components/Flashcard";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Flashcard from "../../components/Flashcard";
 import { apiCall } from "../../utils/apiClient";
 
 export default function FlashcardPractice() {

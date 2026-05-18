@@ -1,20 +1,20 @@
-import "./App.css";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Table from "./pages/Table";
 import Progress from "./pages/Progress";
+import TextAnalyzer from "./pages/TextAnalyzer";
+import NotFound from "./pages/NotFound";
+import Auth from "./Auth";
 import PracticeLayout from "./pages/practice/PracticeLayout";
 import Practice from "./pages/practice/Practice";
 import ListeningPractice from "./pages/practice/ListeningPractice";
 import FlashcardPractice from "./pages/practice/FlashcardPractice";
 import TypingPractice from "./pages/practice/TypingPractice";
-import TextAnalyzer from "./pages/TextAnalyzer";
-import NotFound from "./pages/NotFound";
-import { useEffect, useState } from "react";
-import Auth from "./Auth";
 import { supabase } from "./services/supabaseClient";
 import { apiCall } from "./utils/apiClient";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 function App() {
   const [session, setSession] = useState(false);

@@ -1,10 +1,10 @@
+import { Link } from "react-router-dom";
 import {
   TrophyIcon,
   CheckIcon,
   RectangleStackIcon,
   BoltIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
 
 export default function PracticeSummary({
   mode,
