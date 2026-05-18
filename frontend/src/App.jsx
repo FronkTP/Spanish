@@ -20,30 +20,12 @@ function App() {
   const [session, setSession] = useState(false);
 
   useEffect(() => {
-    if (!session) return;
+    const guestUser = localStorage.getItem("guestSession");
+    if (guestUser) {
+      setSession(JSON.parse(guestUser));
+      return;
+    }
 
-    const syncUser = async () => {
-      try {
-        await apiCall("/users/sync", {
-          method: "POST",
-          body: JSON.stringify({
-            email: session.user.email,
-            fullName:
-              session.user.user_metadata?.full_name ??
-              session.user.user_metadata?.name ??
-              null,
-            avatarUrl: session.user.user_metadata?.avatar_url ?? null,
-          }),
-        });
-      } catch (error) {
-        console.error("Failed to sync user profile:", error);
-      }
-    };
-
-    syncUser();
-  }, [session]);
-
-  useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
@@ -56,6 +38,32 @@ function App() {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!session) return;
+
+    const isGuest = !session.access_token;
+    if (isGuest) return;
+
+    const syncUser = async () => {
+      try {
+        await apiCall("/users/sync", {
+          method: "POST",
+          body: JSON.stringify({
+            email: session.user.email,
+            fullName:
+              session.user.user_metadata?.full_name ??
+              null,
+            avatarUrl: session.user.user_metadata?.avatar_url ?? null,
+          }),
+        });
+      } catch (error) {
+        console.error("Failed to sync user profile:", error);
+      }
+    };
+
+    syncUser();
+  }, [session]);
 
   return session ? (
     <BrowserRouter>

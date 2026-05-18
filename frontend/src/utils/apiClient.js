@@ -1,6 +1,15 @@
 import { supabase } from "../services/supabaseClient";
 
 export async function getAuthHeaders() {
+  const guestUser = localStorage.getItem("guestSession");
+
+  if (guestUser) {
+    const user = JSON.parse(guestUser);
+    return {
+      "X-User-Id": user.id,
+    };
+  }
+
   const {
     data: { session },
   } = await supabase.auth.getSession();

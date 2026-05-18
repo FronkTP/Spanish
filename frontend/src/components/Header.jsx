@@ -3,6 +3,14 @@ import { supabase } from "../services/supabaseClient";
 
 export default function Header() {
   const handleLogout = async () => {
+    const guestUser = localStorage.getItem("guestSession");
+
+    if (guestUser) {
+      localStorage.removeItem("guestSession");
+      window.location.href = "/";
+      return;
+    }
+
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error("Logout error:", error.message);

@@ -12,6 +12,24 @@ export default function Auth() {
     if (error) alert(error.message);
   };
 
+  const handleGuestLogin = async () => {
+    try {
+      const response = await fetch("/api/guest-user");
+      const data = await response.json();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      localStorage.setItem("guestSession", JSON.stringify(data.user));
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Guest login error:", error);
+      alert("Failed to proceed as guest");
+    }
+  };
+
   return (
     <div>
       <div>
@@ -20,6 +38,7 @@ export default function Auth() {
           <p>Sign in to save your progress</p>
         </div>
         <button onClick={handleGoogleLogin}>Login with Google</button>
+        <button onClick={handleGuestLogin}>Continue as guest</button>
       </div>
     </div>
   );

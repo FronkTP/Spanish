@@ -9,6 +9,19 @@ import { practiceRouter } from "./practiceRoutes.js";
 
 export const apiRouter = express.Router();
 
+apiRouter.get("/guest-user", (req, res) => {
+  res.json({
+    user: {
+      id: process.env.TEST_USER_ID_1,
+      email: process.env.TEST_USER_EMAIL,
+      user_metadata: {
+        full_name: process.env.TEST_USER_FULL_NAME,
+        avatar_url: process.env.TEST_USER_AVATAR_URL,
+      },
+    },
+  });
+});
+
 apiRouter.use(extractUserId);
 
 apiRouter.get("/words/daily", wordsController);
