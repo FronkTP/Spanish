@@ -51,9 +51,7 @@ function App() {
           method: "POST",
           body: JSON.stringify({
             email: session.user.email,
-            fullName:
-              session.user.user_metadata?.full_name ??
-              null,
+            fullName: session.user.user_metadata?.full_name ?? null,
             avatarUrl: session.user.user_metadata?.avatar_url ?? null,
           }),
         });
