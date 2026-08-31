@@ -14,7 +14,7 @@ export default function Auth() {
 
   const handleGuestLogin = async () => {
     try {
-      const response = await fetch("/api/guest-user");
+      const response = await fetch("/api/users/guest");
       const data = await response.json();
 
       if (data.error) {

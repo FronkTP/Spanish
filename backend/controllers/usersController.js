@@ -1,4 +1,18 @@
-import { syncUserProfileForUser } from "../services/syncUserProfile.js";
+import { getCurrentUser } from "../services/users/getCurrentUser.js";
+import { syncUserProfileForUser } from "../services/users/syncUserProfile.js";
+
+export async function getCurrentUserController(req, res) {
+  try {
+    const userId = req.userId;
+
+    const currentUser = await getCurrentUser(userId);
+
+    res.json(currentUser);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch", details: error.message });
+  }
+}
+
 
 export async function syncUserController(req, res) {
   try {

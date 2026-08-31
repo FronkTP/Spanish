@@ -1,15 +1,15 @@
 import express from "express";
+import { extractUserId } from "../middleware/authMiddleware.js";
 import { wordsController } from "../controllers/wordsController.js";
 import { statusController } from "../controllers/statusController.js";
 import { progressController } from "../controllers/progressController.js";
 import { analyzeTextController } from "../controllers/analyzeTextController.js";
-import { syncUserController } from "../controllers/userController.js";
-import { extractUserId } from "../middleware/authMiddleware.js";
+import { usersRouter } from "./usersRoutes.js";
 import { practiceRouter } from "./practiceRoutes.js";
 
 export const apiRouter = express.Router();
 
-apiRouter.get("/guest-user", (req, res) => {
+apiRouter.get("/users/guest", (req, res) => {
   res.json({
     user: {
       id: process.env.TEST_USER_ID_1,
@@ -28,6 +28,6 @@ apiRouter.get("/words/daily", wordsController);
 apiRouter.post("/words/:word_id/status", statusController);
 apiRouter.get("/progress", progressController);
 apiRouter.post("/analyze", analyzeTextController);
-apiRouter.post("/users/sync", syncUserController);
 
+apiRouter.use("/users", usersRouter);
 apiRouter.use("/practice", practiceRouter);
