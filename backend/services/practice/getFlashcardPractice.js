@@ -12,6 +12,7 @@ export async function getFlashcardPractice(userId) {
         )
     `,
     )
+    // .eq("word_id", '1771')
     .eq("user_id", userId)
     .order("last_seen", { ascending: true })
     .limit(1);

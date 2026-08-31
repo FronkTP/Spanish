@@ -8,8 +8,11 @@ export async function getCurrentUserController(req, res) {
     const currentUser = await getCurrentUser(userId);
 
     res.json(currentUser);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch", details: error.message });
+  } catch (err) {
+    const status = typeof err?.status === "number" ? err.status : 500;
+    res
+      .status(status)
+      .json({ error: "Failed to fetch user", details: err.message });
   }
 }
 

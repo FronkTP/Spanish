@@ -6,15 +6,22 @@ function createHttpError(status, message) {
   return err;
 }
 
-export async function getCurrentUser({ userId }) {
+export async function getCurrentUser( userId ) {
   if (!userId) throw createHttpError(500, "Missing user id");
 
   const { data, error } = await supabase
     .from("users")
     .select()
-    .eq("id", userId);
+    .eq("id", userId)
+    .limit(1)
+    .single();
 
-  if (error) throw error;
+  if (error) {
+    if (error.code === "PGRST116") {
+      throw createHttpError(404, "User not found");
+    }
+    throw createHttpError(500, error.message);
+  }
 
   return data;
 }
